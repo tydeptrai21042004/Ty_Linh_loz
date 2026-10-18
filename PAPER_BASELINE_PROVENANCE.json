@@ -1,0 +1,26 @@
+{
+  "paper_baseline": {
+    "id": "etfnet_tgf_paper",
+    "source": "Nguyen, Tran, Nguyen (2026), Information Fusion",
+    "doi": "10.1016/j.inffus.2026.104658",
+    "author_repo": "https://github.com/lansimtech/ETFNet",
+    "reference_yaml": "ultralytics/cfg/models/etfnet/etfnet_P2_CAFEM_TGF.yaml",
+    "status": "architecture_match_checked; not accuracy_reproduced"
+  },
+  "ablations": [
+    "dual_concat",
+    "dual_add",
+    "cafem_only",
+    "tgf_only",
+    "goci_no_spatial",
+    "sjpa_no_reliability",
+    "rtpf_safety_ablation"
+  ],
+  "proposal": "sjpa_tr_proposal",
+  "excluded_non_reproduction": [
+    "rgb_p3p5",
+    "rgb_yolo11_p2p5",
+    "sjpa_cafem_legacy"
+  ],
+  "limits": "Does not establish independent code equivalence, trained weight equivalence, published metrics, or independent paper equivalence for any ablation."
+}

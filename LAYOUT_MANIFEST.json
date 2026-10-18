@@ -1,0 +1,784 @@
+{
+  "schema": 1,
+  "limit": 50,
+  "depth": 1,
+  "restored_roots": [
+    "kaggle",
+    "tests",
+    "tools",
+    "ultra_modeling",
+    "ultra_runtime",
+    "ultra_services",
+    "ultralytics"
+  ],
+  "files": [
+    {
+      "original": "kaggle/ETFNet_Paper_Baseline_Ablations_Kaggle.py",
+      "packed": "verification/kaggle~ETFNet_Paper_Baseline_Ablations_Kaggle.py",
+      "sha256": "05dacc1205462805091e1d38006afa31ab6e1fa0f011bb2f4960e4aa5291fbcf",
+      "bytes": 20174
+    },
+    {
+      "original": "tests/__init__.py",
+      "packed": "verification/tests~__init__.py",
+      "sha256": "f3dbb9775f16210472281c50d09276d76e2846bb37570c090dc57075d74c6e74",
+      "bytes": 52
+    },
+    {
+      "original": "tests/conftest.py",
+      "packed": "verification/tests~conftest.py",
+      "sha256": "6d34c88cfc06ba1a91f2333fa65f64d270aaa45f686f86b551dbb9dfbef88085",
+      "bytes": 144
+    },
+    {
+      "original": "tests/create_synthetic_fixture.py",
+      "packed": "verification/tests~create_synthetic_fixture.py",
+      "sha256": "db8d183a4a49ff189229f67a1cd663355f48a8174fd8d989336d036beb9aa055",
+      "bytes": 2643
+    },
+    {
+      "original": "tests/exact_resume_check.py",
+      "packed": "verification/tests~exact_resume_check.py",
+      "sha256": "3dbc6d9d2b525618e6e91516d43165969fe7daab15f1995bcefb2ed27bb7da5e",
+      "bytes": 4561
+    },
+    {
+      "original": "tests/fixtures/tiny_sjpa_obb.yaml",
+      "packed": "verification/tests~fixtures~tiny_sjpa_obb.yaml",
+      "sha256": "b80dc4e22f13901e172b84e98cf28df50cf72eed91147ae4924f44af78049d97",
+      "bytes": 540
+    },
+    {
+      "original": "tests/full_pipeline_smoke.sh",
+      "packed": "verification/tests~full_pipeline_smoke.sh",
+      "sha256": "cb8e79f48cccc886d850598c4d89dfce7287e1136793bd9fcc4f0fe006196205",
+      "bytes": 141
+    },
+    {
+      "original": "tests/multidataset_fixtures.py",
+      "packed": "verification/tests~multidataset_fixtures.py",
+      "sha256": "70df9535baf05b37ed552252fa39c6b09df3286708d05e5d068dc82ec8dfda85",
+      "bytes": 3780
+    },
+    {
+      "original": "tests/public_dataset_fixture.py",
+      "packed": "verification/tests~public_dataset_fixture.py",
+      "sha256": "41b2a48ba01057ec281fe44562197263fc2964de957fb358caa539e356267f52",
+      "bytes": 2395
+    },
+    {
+      "original": "tests/public_dataset_full_pipeline.sh",
+      "packed": "verification/tests~public_dataset_full_pipeline.sh",
+      "sha256": "f901256d403763e6573621bfe2fc127c3e2c1333d62a57bfe04100cc048486ea",
+      "bytes": 1882
+    },
+    {
+      "original": "tests/run_full_e2e.py",
+      "packed": "verification/tests~run_full_e2e.py",
+      "sha256": "9f30213e1ed01cdc53864914413bb75e79294952f5ab4f4687c7b876ad0c340e",
+      "bytes": 4076
+    },
+    {
+      "original": "tests/run_multidataset_full_pipeline.py",
+      "packed": "verification/tests~run_multidataset_full_pipeline.py",
+      "sha256": "521d8d6641858c41a86fa292eb41ecc6e976ccc4aa5defc4f80727042975e8a3",
+      "bytes": 6468
+    },
+    {
+      "original": "tests/smoke_pipeline.py",
+      "packed": "verification/tests~smoke_pipeline.py",
+      "sha256": "c3fb727d431736d153998d6ac17fe05e8c4d7c7fe91c9dfae6a3ff21dcab0cc0",
+      "bytes": 6021
+    },
+    {
+      "original": "tests/test_candidate_certificate.py",
+      "packed": "verification/tests~test_candidate_certificate.py",
+      "sha256": "9ef12bcbcff393c511de6f65b96250de436d3cb54a91f7ecece78978f87818c8",
+      "bytes": 558
+    },
+    {
+      "original": "tests/test_dcspf_guard.py",
+      "packed": "verification/tests~test_dcspf_guard.py",
+      "sha256": "6eb920b84cf5ec82fc88c14f04d2b4c22857ce270fb24d04f4dfaaf518739f9f",
+      "bytes": 2491
+    },
+    {
+      "original": "tests/test_kaggle_regressions.py",
+      "packed": "verification/tests~test_kaggle_regressions.py",
+      "sha256": "ac74c7c9178030f85b337c6657dc249f390214fd7c88d82d5706e41492d29878",
+      "bytes": 9522
+    },
+    {
+      "original": "tests/test_mpcrf_math.py",
+      "packed": "verification/tests~test_mpcrf_math.py",
+      "sha256": "cd4a218886be0fa5a100125ce64cd1e10bf395ffb0e9ca87ade25b2d07325374",
+      "bytes": 6002
+    },
+    {
+      "original": "tests/test_multidataset_pipeline.py",
+      "packed": "verification/tests~test_multidataset_pipeline.py",
+      "sha256": "3a7783be80c5b14b216f0a124fc8da41f11240db745a3e454627d6dd093b9836",
+      "bytes": 8109
+    },
+    {
+      "original": "tests/test_pipeline_reproducibility.py",
+      "packed": "verification/tests~test_pipeline_reproducibility.py",
+      "sha256": "4e52413dec437086ba87edcfd2a5f5c3ba525443ac4dc87de3bea12866c47f8d",
+      "bytes": 7650
+    },
+    {
+      "original": "tests/test_public_dataset_pipeline.py",
+      "packed": "verification/tests~test_public_dataset_pipeline.py",
+      "sha256": "0ea2fee6321b5ff6d5941a8d6dc2fa24937da981a8b8d92fe735c4fac0f8affb",
+      "bytes": 5328
+    },
+    {
+      "original": "tests/test_rgb_ir_edge_cases.py",
+      "packed": "verification/tests~test_rgb_ir_edge_cases.py",
+      "sha256": "f2734a15ecdf0b423865a707c52559dfaef0e1b57a53214ff59b0111c684880f",
+      "bytes": 6837
+    },
+    {
+      "original": "tests/test_rtpf_corrected.py",
+      "packed": "verification/tests~test_rtpf_corrected.py",
+      "sha256": "a7d341fec9b70b70e0e193bfc0a6ae016372710e810cc053b39fd292b720c7e8",
+      "bytes": 2642
+    },
+    {
+      "original": "tests/test_sjpa_math_extended.py",
+      "packed": "verification/tests~test_sjpa_math_extended.py",
+      "sha256": "56ca986659ac6daad2785ce724aa82a40c9052533b49c44e36129a27874dfff5",
+      "bytes": 11064
+    },
+    {
+      "original": "tests/test_split_source_layout.py",
+      "packed": "verification/tests~test_split_source_layout.py",
+      "sha256": "bebd6938c64d7db03d68ef4f91b18cb45d93b8865885a442547161a9027c278c",
+      "bytes": 973
+    },
+    {
+      "original": "tools/__init__.py",
+      "packed": "verification/tools~__init__.py",
+      "sha256": "295f43ff7476510ed4141ca67270f39a95cf61cf54b39f6725fcb19ebdb89dd3",
+      "bytes": 45
+    },
+    {
+      "original": "tools/audit_baselines.py",
+      "packed": "verification/tools~audit_baselines.py",
+      "sha256": "4d2226f9e84f9cb4270723b8113e6cd26fe37e28d48e601b970a322533d951c3",
+      "bytes": 6313
+    },
+    {
+      "original": "tools/certify_candidate.py",
+      "packed": "verification/tools~certify_candidate.py",
+      "sha256": "1ade535e8b4144d5ef0c58083e7414110caeca03ac9d3b8a193bb377a2e6c287",
+      "bytes": 3738
+    },
+    {
+      "original": "tools/check_rgb_ir_dataset.py",
+      "packed": "verification/tools~check_rgb_ir_dataset.py",
+      "sha256": "bd5b7caec9c07f6326b69a7a713315bfbcfc53fe34d0755b9ca83e1e28633e36",
+      "bytes": 1174
+    },
+    {
+      "original": "tools/run_extended_validation.py",
+      "packed": "verification/tools~run_extended_validation.py",
+      "sha256": "bd844f7ccd62694c1599a72d602a68259a349e78a6b2aaea3186b20db3fd62e3",
+      "bytes": 5013
+    },
+    {
+      "original": "tools/run_reproducible_experiment.py",
+      "packed": "verification/tools~run_reproducible_experiment.py",
+      "sha256": "cf8195b6007c531173124d57465e06cdb6e2333db2858715d726793657f4a0a3",
+      "bytes": 6058
+    },
+    {
+      "original": "tools/validate_model_configs.py",
+      "packed": "verification/tools~validate_model_configs.py",
+      "sha256": "03d6c761d3b211825aa26c3a7325c4d26734401e70b3b76113b649ac15748b58",
+      "bytes": 1893
+    },
+    {
+      "original": "ultra_modeling/models/__init__.py",
+      "packed": "models/ultra_modeling~models~__init__.py",
+      "sha256": "faa3ec7325209407e04013aeef168b0159fb2b631f10b253d5ced235940d7124",
+      "bytes": 89
+    },
+    {
+      "original": "ultra_modeling/models/utils/__init__.py",
+      "packed": "models/ultra_modeling~models~utils~__init__.py",
+      "sha256": "987b49b8ae21c05f1cb95f951c373bb69eaee83d601f3d99ec923c82b9900d3b",
+      "bytes": 42
+    },
+    {
+      "original": "ultra_modeling/models/utils/loss.py",
+      "packed": "models/ultra_modeling~models~utils~loss.py",
+      "sha256": "ddf1e7cbdcc6654ca44610e3cd3bc1369f18e5f0e15f138a6964d2c78166ae2c",
+      "bytes": 15961
+    },
+    {
+      "original": "ultra_modeling/models/utils/ops.py",
+      "packed": "models/ultra_modeling~models~utils~ops.py",
+      "sha256": "23e6a3cb4304f4f81761dff799b57c110a4e48325148ee952b97da99d5612926",
+      "bytes": 13283
+    },
+    {
+      "original": "ultra_modeling/models/yolo/__init__.py",
+      "packed": "models/ultra_modeling~models~yolo~__init__.py",
+      "sha256": "9330ad844923c4e2fdcd11e849e7e8219972da6781aa29e90f2225df42312615",
+      "bytes": 140
+    },
+    {
+      "original": "ultra_modeling/models/yolo/detect/__init__.py",
+      "packed": "models/ultra_modeling~models~yolo~detect~__init__.py",
+      "sha256": "5da452ff27c91d9d5475e6934af7b577b7866126305c1251a7a3d73347d98324",
+      "bytes": 229
+    },
+    {
+      "original": "ultra_modeling/models/yolo/detect/predict.py",
+      "packed": "models/ultra_modeling~models~yolo~detect~predict.py",
+      "sha256": "13657d63d9b5ad0b129b57e1e3a1231326913cd041208ef0933f8b7131efd253",
+      "bytes": 1178
+    },
+    {
+      "original": "ultra_modeling/models/yolo/detect/train.py",
+      "packed": "models/ultra_modeling~models~yolo~detect~train.py",
+      "sha256": "289d46b5c711a5b5615171739b5c188cb1903c781a2b2fad1a155c5c85d85bcc",
+      "bytes": 6764
+    },
+    {
+      "original": "ultra_modeling/models/yolo/detect/val.py",
+      "packed": "models/ultra_modeling~models~yolo~detect~val.py",
+      "sha256": "51b3732b28733eceb95d8b48a57acf367f6edbc04b8635db5c10de1b973d70e6",
+      "bytes": 14462
+    },
+    {
+      "original": "ultra_modeling/models/yolo/model.py",
+      "packed": "models/ultra_modeling~models~yolo~model.py",
+      "sha256": "9f07a4bc6dd551359cd2d05ca8a6b7953673d5d652b8844d5810c11521fc16db",
+      "bytes": 783
+    },
+    {
+      "original": "ultra_modeling/models/yolo/obb/__init__.py",
+      "packed": "models/ultra_modeling~models~yolo~obb~__init__.py",
+      "sha256": "25f7469f8cd2c8bc91e4a8e9860a85ea0c85dac996a2a7bd436b25403767b500",
+      "bytes": 193
+    },
+    {
+      "original": "ultra_modeling/models/yolo/obb/predict.py",
+      "packed": "models/ultra_modeling~models~yolo~obb~predict.py",
+      "sha256": "9c72932a780350c02c36c1535a1311e99149d8ae8501440df54ed9daf80c7f61",
+      "bytes": 2135
+    },
+    {
+      "original": "ultra_modeling/models/yolo/obb/train.py",
+      "packed": "models/ultra_modeling~models~yolo~obb~train.py",
+      "sha256": "e8d62c1185dbc65bda3f6fb911e2231a6f62fa19563d7950304b30744c726cf3",
+      "bytes": 1477
+    },
+    {
+      "original": "ultra_modeling/models/yolo/obb/val.py",
+      "packed": "models/ultra_modeling~models~yolo~obb~val.py",
+      "sha256": "703d00b62775899bd704a1f3c690dd1ad9493271683688e6ddc1bcc3bbcfe85e",
+      "bytes": 12997
+    },
+    {
+      "original": "ultra_modeling/nn/__init__.py",
+      "packed": "models/ultra_modeling~nn~__init__.py",
+      "sha256": "ed3fc65b762c3e0d6403eef8524945d9471a6dc472b6d45962b08e5e236726a5",
+      "bytes": 555
+    },
+    {
+      "original": "ultra_modeling/nn/autobackend.py",
+      "packed": "models/ultra_modeling~nn~autobackend.py",
+      "sha256": "05188361b2ebb08385f431e8541f886cb519d4d3adcc1752cbdc5be36d1cd854",
+      "bytes": 27022
+    },
+    {
+      "original": "ultra_modeling/nn/modules/__init__.py",
+      "packed": "models/ultra_modeling~nn~modules~__init__.py",
+      "sha256": "faf5a9964601599a18060eb7dbb0b63f1232d27f9896be0f0be5b9d90776e406",
+      "bytes": 1710
+    },
+    {
+      "original": "ultra_modeling/nn/modules/block.py",
+      "packed": "models/ultra_modeling~nn~modules~block.py",
+      "sha256": "d4d0e29f9f848396eb1f42929e0a14d73a40ef1d8120cdcae0771b500d49403a",
+      "bytes": 106419
+    },
+    {
+      "original": "ultra_modeling/nn/modules/conv.py",
+      "packed": "models/ultra_modeling~nn~modules~conv.py",
+      "sha256": "cff39091af6ce61d29de4d725ababb48783506c03a3df379943490b9b5b623f9",
+      "bytes": 12774
+    },
+    {
+      "original": "ultra_modeling/nn/modules/head.py",
+      "packed": "models/ultra_modeling~nn~modules~head.py",
+      "sha256": "f2fdad511a16566a014821395fba835bdc7da4cacc8a6edb32952439a05691f7",
+      "bytes": 19728
+    },
+    {
+      "original": "ultra_modeling/nn/modules/spatial_transformer.py",
+      "packed": "models/ultra_modeling~nn~modules~spatial_transformer.py",
+      "sha256": "06816106054440844e1c3eb917941d2c49068414c13a8149ab8bb03e2258b877",
+      "bytes": 14375
+    },
+    {
+      "original": "ultra_modeling/nn/modules/transformer.py",
+      "packed": "models/ultra_modeling~nn~modules~transformer.py",
+      "sha256": "47b2bfdebe1a4e5be08624d347387af4d98dce53bfd528a289f6debc71a59441",
+      "bytes": 17895
+    },
+    {
+      "original": "ultra_modeling/nn/modules/utils.py",
+      "packed": "models/ultra_modeling~nn~modules~utils.py",
+      "sha256": "abea9f79b9cc0f68aa6724ec9594c7b19616ee1cab5fad954605261d7ebcdfe5",
+      "bytes": 3436
+    },
+    {
+      "original": "ultra_modeling/nn/tasks.py",
+      "packed": "models/ultra_modeling~nn~tasks.py",
+      "sha256": "7a5c5293c46779799134a4739faff9f197836b26372447e8f63e2d051d98cd97",
+      "bytes": 39466
+    },
+    {
+      "original": "ultra_runtime/data/__init__.py",
+      "packed": "runtime/ultra_runtime~data~__init__.py",
+      "sha256": "4d637eded13ba4f0641a4bc0159a127b10640b0db8169e3db3070a788ca51e51",
+      "bytes": 389
+    },
+    {
+      "original": "ultra_runtime/data/annotator.py",
+      "packed": "runtime/ultra_runtime~data~annotator.py",
+      "sha256": "f148bfe07e1d014d3d050fa00f05b8baa0d533188a6733487c5d6ce59be11a4d",
+      "bytes": 2122
+    },
+    {
+      "original": "ultra_runtime/data/augment.py",
+      "packed": "runtime/ultra_runtime~data~augment.py",
+      "sha256": "0e2a77837956ca283e64a288db9105839db1575ea8d0d0374d110919930d1160",
+      "bytes": 53083
+    },
+    {
+      "original": "ultra_runtime/data/base.py",
+      "packed": "runtime/ultra_runtime~data~base.py",
+      "sha256": "4253acdaf29bd20f9662ce1c9562a5182eb8a841f822ea25a2edfa5e7926bca1",
+      "bytes": 15633
+    },
+    {
+      "original": "ultra_runtime/data/build.py",
+      "packed": "runtime/ultra_runtime~data~build.py",
+      "sha256": "d1213536b10f6f1b3c0e11bc13ce68b130e95ee929c88b98d1041793927a7bd4",
+      "bytes": 7986
+    },
+    {
+      "original": "ultra_runtime/data/converter.py",
+      "packed": "runtime/ultra_runtime~data~converter.py",
+      "sha256": "b5b57f2d5be4af88242d3b8d336bf47503c1b8e047da99272a50778af6a0cd05",
+      "bytes": 12505
+    },
+    {
+      "original": "ultra_runtime/data/dataset.py",
+      "packed": "runtime/ultra_runtime~data~dataset.py",
+      "sha256": "18b7ff74668b7763c740dffc7b4ba2d79daec290c2f85577ea1d19eda6708c0b",
+      "bytes": 16854
+    },
+    {
+      "original": "ultra_runtime/data/loaders.py",
+      "packed": "runtime/ultra_runtime~data~loaders.py",
+      "sha256": "571b053fd1a8dc59623f26ada77c470d8088381681a71f98b73add30a27b71ed",
+      "bytes": 29662
+    },
+    {
+      "original": "ultra_runtime/data/public_multidataset.py",
+      "packed": "runtime/ultra_runtime~data~public_multidataset.py",
+      "sha256": "f49d3f93d426dd2c65aab58c4ec47b5aa06d2468cf84230f68e5c05e4f68966f",
+      "bytes": 53930
+    },
+    {
+      "original": "ultra_runtime/data/public_rgb_ir.py",
+      "packed": "runtime/ultra_runtime~data~public_rgb_ir.py",
+      "sha256": "76c48ee20e183e4e9636480b2eb118a3f2a1b3ff02490d72be7a87c74f77aa8c",
+      "bytes": 28681
+    },
+    {
+      "original": "ultra_runtime/data/rgb_ir.py",
+      "packed": "runtime/ultra_runtime~data~rgb_ir.py",
+      "sha256": "3dd47b123e57365ca291d5de0e9c46715e7d7f9b3c312c8c676f8265a5a99d4d",
+      "bytes": 14726
+    },
+    {
+      "original": "ultra_runtime/data/rgb_ir_check.py",
+      "packed": "runtime/ultra_runtime~data~rgb_ir_check.py",
+      "sha256": "8e7fed77383d20eb1e97008b18284a33de3a6711dea39d117a52f733e82beeaf",
+      "bytes": 8246
+    },
+    {
+      "original": "ultra_runtime/data/split_dota.py",
+      "packed": "runtime/ultra_runtime~data~split_dota.py",
+      "sha256": "92c3ca7fdef69c05760b4fce54955c40a189789a854aba08860ee1b2d7bda1bd",
+      "bytes": 10079
+    },
+    {
+      "original": "ultra_runtime/data/utils.py",
+      "packed": "runtime/ultra_runtime~data~utils.py",
+      "sha256": "f4e6a016da4efa94007650630dfa7706634b2374b3f4a8396c318361346290bd",
+      "bytes": 30165
+    },
+    {
+      "original": "ultra_runtime/engine/__init__.py",
+      "packed": "runtime/ultra_runtime~engine~__init__.py",
+      "sha256": "987b49b8ae21c05f1cb95f951c373bb69eaee83d601f3d99ec923c82b9900d3b",
+      "bytes": 42
+    },
+    {
+      "original": "ultra_runtime/engine/exporter.py",
+      "packed": "runtime/ultra_runtime~engine~exporter.py",
+      "sha256": "bbd77e4e196fa3da11d0d36a90cb551e5f6764a27c6782bb1d36814415fe8f05",
+      "bytes": 51489
+    },
+    {
+      "original": "ultra_runtime/engine/model.py",
+      "packed": "runtime/ultra_runtime~engine~model.py",
+      "sha256": "b604de523b1475685ca2b6aa388d5f7d218cd1d4383fefe9babdaa2905f37dcd",
+      "bytes": 20629
+    },
+    {
+      "original": "ultra_runtime/engine/predictor.py",
+      "packed": "runtime/ultra_runtime~engine~predictor.py",
+      "sha256": "b79a59ee72781399ce2db30c6d42a98914c2024a61f910689e4ca0fdd6bf3ea7",
+      "bytes": 18320
+    },
+    {
+      "original": "ultra_runtime/engine/results.py",
+      "packed": "runtime/ultra_runtime~engine~results.py",
+      "sha256": "6d6de7b5db0d81068ab5654f02d91f9018913499d000a5d17dd6383440f99001",
+      "bytes": 26752
+    },
+    {
+      "original": "ultra_runtime/engine/trainer.py",
+      "packed": "runtime/ultra_runtime~engine~trainer.py",
+      "sha256": "38e7609c7087091abeedf05441431ebf013266dfd1da1e1bba45a3424c6235bb",
+      "bytes": 43784
+    },
+    {
+      "original": "ultra_runtime/engine/tuner.py",
+      "packed": "runtime/ultra_runtime~engine~tuner.py",
+      "sha256": "72f1429b8d5cde28a2b1c6f5421ccc7ec78cf2efcd4d48c6ab638934173948c7",
+      "bytes": 11764
+    },
+    {
+      "original": "ultra_runtime/engine/validator.py",
+      "packed": "runtime/ultra_runtime~engine~validator.py",
+      "sha256": "fc082f72d22c5fcfddb6dffa3052f56491f9555f99958cb0946cfe3a3a7f9324",
+      "bytes": 14497
+    },
+    {
+      "original": "ultra_runtime/hub/__init__.py",
+      "packed": "runtime/ultra_runtime~hub~__init__.py",
+      "sha256": "899cc483df200c4af66df3d9a291f09c521f0d50d9f5afb2b800243ca9e7da1c",
+      "bytes": 3685
+    },
+    {
+      "original": "ultra_runtime/hub/auth.py",
+      "packed": "runtime/ultra_runtime~hub~auth.py",
+      "sha256": "0ff7df42099635fa7e71c27682e73be9480e70c44f10acdc38923c0002d97ac9",
+      "bytes": 5364
+    },
+    {
+      "original": "ultra_runtime/hub/session.py",
+      "packed": "runtime/ultra_runtime~hub~session.py",
+      "sha256": "b67533e91d891f14c149204cc02a040ed78c3460110dacb511ca7a14dd627847",
+      "bytes": 8423
+    },
+    {
+      "original": "ultra_runtime/hub/utils.py",
+      "packed": "runtime/ultra_runtime~hub~utils.py",
+      "sha256": "df342104297ccc7aea8071cecd5adcc3b4a81ed063f861329d7da93642c7e985",
+      "bytes": 9581
+    },
+    {
+      "original": "ultra_services/utils/__init__.py",
+      "packed": "services/ultra_services~utils~__init__.py",
+      "sha256": "d73dc5f79d382b1fbf2e22ec44c2e6b61dd4fea163db85713b455d140bf8e07d",
+      "bytes": 34575
+    },
+    {
+      "original": "ultra_services/utils/autobatch.py",
+      "packed": "services/ultra_services~utils~autobatch.py",
+      "sha256": "9998c97ab4e2e964f31aad7fd09894f173478bbd1bd69b0238013e7de6513a0b",
+      "bytes": 3862
+    },
+    {
+      "original": "ultra_services/utils/benchmarks.py",
+      "packed": "services/ultra_services~utils~benchmarks.py",
+      "sha256": "72dea0f54c9f1cf8ba6bbfc4ba9a5b4eb55ebbf78f8822c5eca89bf1164a460c",
+      "bytes": 18217
+    },
+    {
+      "original": "ultra_services/utils/callbacks/__init__.py",
+      "packed": "services/ultra_services~utils~callbacks~__init__.py",
+      "sha256": "9e1ae730fa4f0dbe5f82ac38db0f1eedf0b94e310f0be8e9d3876942d690b645",
+      "bytes": 214
+    },
+    {
+      "original": "ultra_services/utils/callbacks/base.py",
+      "packed": "services/ultra_services~utils~callbacks~base.py",
+      "sha256": "ca1e325afc0e80f6364682d87c353afabc299dd2af6a8c7b86c778f46f869237",
+      "bytes": 5775
+    },
+    {
+      "original": "ultra_services/utils/callbacks/clearml.py",
+      "packed": "services/ultra_services~utils~callbacks~clearml.py",
+      "sha256": "c7abd9a03ae2b33583532474c46cf7d211a738da35369de5f78224b919f39266",
+      "bytes": 6275
+    },
+    {
+      "original": "ultra_services/utils/callbacks/comet.py",
+      "packed": "services/ultra_services~utils~callbacks~comet.py",
+      "sha256": "e7c296db36aac459e7ed469bd5f0c1139a7cf40d4a2a2d9b8ea4c52bde6c1642",
+      "bytes": 13870
+    },
+    {
+      "original": "ultra_services/utils/callbacks/dvc.py",
+      "packed": "services/ultra_services~utils~callbacks~dvc.py",
+      "sha256": "a5fcb03b552a5d3717aa8ed676f8cf7e148abbc2a6a0caf499ebb92c4874aeb6",
+      "bytes": 4997
+    },
+    {
+      "original": "ultra_services/utils/callbacks/hub.py",
+      "packed": "services/ultra_services~utils~callbacks~hub.py",
+      "sha256": "5628988714d4c6b596f4a5e9d0d8635d8a0af2fc49a056bc808c5946d9904f5a",
+      "bytes": 3350
+    },
+    {
+      "original": "ultra_services/utils/callbacks/mlflow.py",
+      "packed": "services/ultra_services~utils~callbacks~mlflow.py",
+      "sha256": "d11a5b95bfc08a8185aa0aca755e315213e35dd5c74eeb57168cb785974f3167",
+      "bytes": 4828
+    },
+    {
+      "original": "ultra_services/utils/callbacks/neptune.py",
+      "packed": "services/ultra_services~utils~callbacks~neptune.py",
+      "sha256": "a883748098a90757f70e2edbc3445bdbc8cb6280b3252592a858558320b91a2d",
+      "bytes": 3697
+    },
+    {
+      "original": "ultra_services/utils/callbacks/raytune.py",
+      "packed": "services/ultra_services~utils~callbacks~raytune.py",
+      "sha256": "13606205c3ef427f9d16ffc24c458042a4deb7e42e829c31138f5abab61b9690",
+      "bytes": 2263
+    },
+    {
+      "original": "ultra_services/utils/callbacks/tensorboard.py",
+      "packed": "services/ultra_services~utils~callbacks~tensorboard.py",
+      "sha256": "e6c343ab875b55966f6cbdb6d6b438c66748127169b749787c0137088401032a",
+      "bytes": 3013
+    },
+    {
+      "original": "ultra_services/utils/callbacks/wb.py",
+      "packed": "services/ultra_services~utils~callbacks~wb.py",
+      "sha256": "636369b7760198c2273b51f88fd9c5e3485d8661843cf2da0a92c8a053d82945",
+      "bytes": 5532
+    },
+    {
+      "original": "ultra_services/utils/checks.py",
+      "packed": "services/ultra_services~utils~checks.py",
+      "sha256": "609a822ce44918ad5e7c0566219244fd594968c2ab8287e053d8d8b1777c5ede",
+      "bytes": 27830
+    },
+    {
+      "original": "ultra_services/utils/dist.py",
+      "packed": "services/ultra_services~utils~dist.py",
+      "sha256": "7a047667a5e583be6fef685d753badd2ad3e04862f17e6029ff1c4ecf072b8af",
+      "bytes": 2396
+    },
+    {
+      "original": "ultra_services/utils/downloads.py",
+      "packed": "services/ultra_services~utils~downloads.py",
+      "sha256": "9b9eb7873ad27d0949f0256ed8000556490e04444af90401d73aa9e3ada38c8d",
+      "bytes": 21582
+    },
+    {
+      "original": "ultra_services/utils/errors.py",
+      "packed": "services/ultra_services~utils~errors.py",
+      "sha256": "c1c34cf18734967e17f3af2450cea922c8ca4ff5baeca7b3e159bbd977beb58a",
+      "bytes": 816
+    },
+    {
+      "original": "ultra_services/utils/files.py",
+      "packed": "services/ultra_services~utils~files.py",
+      "sha256": "6c30638c48e5b200ef6e7d035b104622cf7418933e5ca2ec62e27cde93e693e7",
+      "bytes": 5277
+    },
+    {
+      "original": "ultra_services/utils/instance.py",
+      "packed": "services/ultra_services~utils~instance.py",
+      "sha256": "cf4f2c00f720ba880af8651b562940221ef6ba4d32097bc417fed399c9bc93f8",
+      "bytes": 15573
+    },
+    {
+      "original": "ultra_services/utils/loss.py",
+      "packed": "services/ultra_services~utils~loss.py",
+      "sha256": "1ab67224ba732153181452237077adafe3d41014738a561e501f8cea980886ee",
+      "bytes": 32515
+    },
+    {
+      "original": "ultra_services/utils/metrics.py",
+      "packed": "services/ultra_services~utils~metrics.py",
+      "sha256": "ad3b83ebedf90f7739608ef6ac57ee48f8391324f80753117345dfc4d4434f4a",
+      "bytes": 53701
+    },
+    {
+      "original": "ultra_services/utils/ops.py",
+      "packed": "services/ultra_services~utils~ops.py",
+      "sha256": "9a693fe3d550797da52e775736ca5d5bf3cbcb617f020337b92a7c378ffb6d53",
+      "bytes": 32417
+    },
+    {
+      "original": "ultra_services/utils/patches.py",
+      "packed": "services/ultra_services~utils~patches.py",
+      "sha256": "0a78ea9466dac8922e34a529460e625d7a1426eb19415176061167bb459ed4ed",
+      "bytes": 2864
+    },
+    {
+      "original": "ultra_services/utils/plotting.py",
+      "packed": "services/ultra_services~utils~plotting.py",
+      "sha256": "b9bc92a1394e44375cd41ea94afd3affa2b4bc8132394436c36ff686cfef4699",
+      "bytes": 42706
+    },
+    {
+      "original": "ultra_services/utils/reproducibility.py",
+      "packed": "services/ultra_services~utils~reproducibility.py",
+      "sha256": "c83a6803fb4cfd94e57797eb8506be0abfee682a3a76e302e49470539c3161dc",
+      "bytes": 9931
+    },
+    {
+      "original": "ultra_services/utils/tal.py",
+      "packed": "services/ultra_services~utils~tal.py",
+      "sha256": "4d50158ab189236aa1f0a5048730757907c83c26fcab0c202c96d6e9a490c3d7",
+      "bytes": 16040
+    },
+    {
+      "original": "ultra_services/utils/torch_utils.py",
+      "packed": "services/ultra_services~utils~torch_utils.py",
+      "sha256": "8ef468c0621788378f8407b3a170245996dde115a0b1ff50c943aba3a4839fef",
+      "bytes": 26158
+    },
+    {
+      "original": "ultra_services/utils/triton.py",
+      "packed": "services/ultra_services~utils~triton.py",
+      "sha256": "a296c1d67760c1f994273caf507f6fbcc7b64ab0d6e85aa617128478d0da00b4",
+      "bytes": 3932
+    },
+    {
+      "original": "ultra_services/utils/tuner.py",
+      "packed": "services/ultra_services~utils~tuner.py",
+      "sha256": "f107dea18755b4f6474a483ba34e834e5c052904be7ffe577a60dad6f2a4ba6b",
+      "bytes": 6227
+    },
+    {
+      "original": "ultralytics/__init__.py",
+      "packed": "configs/ultralytics~__init__.py",
+      "sha256": "0e263b307239edaa2a882fa5cf6595a23669c4a54209529642bf7ff117b8c881",
+      "bytes": 808
+    },
+    {
+      "original": "ultralytics/cfg/__init__.py",
+      "packed": "configs/ultralytics~cfg~__init__.py",
+      "sha256": "d76dd463fb9ff09123daa21190026df82dc43069d342b756e717a2efbfc9512e",
+      "bytes": 20441
+    },
+    {
+      "original": "ultralytics/cfg/datasets/etfnet_rgb_ir_example.yaml",
+      "packed": "configs/ultralytics~cfg~datasets~etfnet_rgb_ir_example.yaml",
+      "sha256": "9739eb07ecec3e3bda965835e857b5907d0fca78d880dd602229327b868f7808",
+      "bytes": 673
+    },
+    {
+      "original": "ultralytics/cfg/default.yaml",
+      "packed": "configs/ultralytics~cfg~default.yaml",
+      "sha256": "943f8fc8ee617dd32b6144343b6d122510c3ef453b1558bab26d60adfa825c61",
+      "bytes": 8678
+    },
+    {
+      "original": "ultralytics/cfg/models/README.md",
+      "packed": "configs/ultralytics~cfg~models~README.md",
+      "sha256": "7f1b0d4a7fc22cc04cc73fb0270758f92de96653272a594d9564e25ac0f0d6d5",
+      "bytes": 3095
+    },
+    {
+      "original": "ultralytics/cfg/models/etfnet/etfnet_CAFEM_noTGF.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_CAFEM_noTGF.yaml",
+      "sha256": "0459bd8c8060ef8bf9c3a4fef138c83b212af51c38537f17e6ac41f109eb4e4e",
+      "bytes": 1625
+    },
+    {
+      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_C3k2_MPCRF.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_C3k2_MPCRF.yaml",
+      "sha256": "e8b944061ff79c53b2d75c0fb17ee25c2c421e11c05e5d431b70965e6c90709f",
+      "bytes": 1308
+    },
+    {
+      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_C3k2_RTPF.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_C3k2_RTPF.yaml",
+      "sha256": "33f934534dbd173b72163fac9d843683311ba7439455627194907da760b25eaa",
+      "bytes": 1592
+    },
+    {
+      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_C3k2_SJPA_TR_Corrected.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_C3k2_SJPA_TR_Corrected.yaml",
+      "sha256": "4677c7f6bcff2d65141db5338dce273a7451dfe368665f024e8099e1effa7750",
+      "bytes": 1456
+    },
+    {
+      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_CAFEM_GOCI.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_CAFEM_GOCI.yaml",
+      "sha256": "de75c930fa02e22136dfa79379d220b4deef45d8edf879e6115fb4629e68deb3",
+      "bytes": 1058
+    },
+    {
+      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_CAFEM_TGF.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_CAFEM_TGF.yaml",
+      "sha256": "11fba40e872ecc29b5d2b0d6d88abb3cebc7cc1f0273ff16f591f36ba44b8361",
+      "bytes": 1659
+    },
+    {
+      "original": "ultralytics/cfg/models/etfnet/etfnet_dualstream_noCAFEM_noTGF.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_dualstream_noCAFEM_noTGF.yaml",
+      "sha256": "775aadfc800f0d4fa2739ed41573d40d35775d0312af80bb4c736917d3a04217",
+      "bytes": 1695
+    },
+    {
+      "original": "ultralytics/cfg/models/etfnet/etfnet_noCAFEM_TGF.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_noCAFEM_TGF.yaml",
+      "sha256": "29edcdf4b0a638c87f68b14bc16a28c6972250ec7370e653cf72821e782f24c1",
+      "bytes": 2157
+    },
+    {
+      "original": "ultralytics/cfg/models/etfnet/noCAFEM_noTGF_add.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~noCAFEM_noTGF_add.yaml",
+      "sha256": "a5f23393d62d002e879ba907b7099fb3bffe2229cd945247141b67184102fca5",
+      "bytes": 1629
+    },
+    {
+      "original": "ultralytics/cfg/models/v8/yolov8.yaml",
+      "packed": "configs/ultralytics~cfg~models~v8~yolov8.yaml",
+      "sha256": "f89e6cb9d44bd143df20498f467bb4f59897db3fff16e5bb6684d58d2b3f6a80",
+      "bytes": 1919
+    },
+    {
+      "original": "ultralytics/cfg/trackers/botsort.yaml",
+      "packed": "configs/ultralytics~cfg~trackers~botsort.yaml",
+      "sha256": "37775d454976b8ebc923f43b4c1230f3c33269e576e345ffc25c7967a2225215",
+      "bytes": 890
+    },
+    {
+      "original": "ultralytics/cfg/trackers/bytetrack.yaml",
+      "packed": "configs/ultralytics~cfg~trackers~bytetrack.yaml",
+      "sha256": "145a660a3ec4d31a4e75eed1f96df3515732ea12821c08a3f6ac29f52029fa92",
+      "bytes": 694
+    }
+  ]
+}
