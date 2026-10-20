@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "description": "Independent published RGB/IR models to run from AUTHORS' upstream source, never relabeled local ablations.",
+  "methods": {
+    "c2former_obb": {
+      "title": "C2Former: Calibrated and Complementary Transformer for RGB-Infrared Object Detection",
+      "authors": "Maoxun Yuan, Xingxing Wei",
+      "venue": "IEEE Transactions on Geoscience and Remote Sensing (2024)",
+      "paper_url": "https://doi.org/10.1109/TGRS.2024.3376819",
+      "source": "https://github.com/yuanmaoxun/C2Former.git",
+      "source_kind": "authors_official",
+      "source_required": ["configs/s2anet/s2anet_c2former_fpn_1x_dota_le135.py", "tools/train.py", "tools/test.py"],
+      "config": "configs/s2anet/s2anet_c2former_fpn_1x_dota_le135.py",
+      "prediction_geometry": "obb",
+      "modality": "paired_RGB_IR",
+      "official_dataset": "DroneVehicle",
+      "training_requirements": "MMRotate environment; DroneVehicle-style paired loader and paths; pretrained weights if referenced by upstream config; adapted class count and exact VEDAI split for cross-dataset comparison",
+      "official_train_command": ["{python}", "tools/train.py", "{config}", "--work-dir", "{work_dir}"],
+      "official_test_command": ["{python}", "tools/test.py", "{config}", "{checkpoint}", "--out", "{predictions}"],
+      "readiness": "needs_external_environment_and_dataset_adapter"
+    },
+    "superyolo_hbb": {
+      "title": "SuperYOLO: Super Resolution Assisted Object Detection in Multimodal Remote Sensing Imagery",
+      "authors": "Jiaqing Zhang et al.",
+      "venue": "IEEE Transactions on Geoscience and Remote Sensing (2023)",
+      "paper_url": "https://doi.org/10.1109/TGRS.2023.3258666",
+      "source": "https://github.com/icey-zhang/SuperYOLO.git",
+      "source_kind": "authors_official",
+      "source_required": ["models/SRyolo_MF.yaml", "train.py", "test.py", "data/SRvedai.yaml"],
+      "config": "models/SRyolo_MF.yaml",
+      "prediction_geometry": "hbb",
+      "modality": "paired_RGB_NIR",
+      "official_dataset": "VEDAI (with super-resolution training branch)",
+      "training_requirements": "Original author's VEDAI and VEDAI_1024 paired split/layout; HBB annotations; separate legacy requirements; SR branch enabled for full proposed model",
+      "official_train_command": ["{python}", "train.py", "--cfg", "models/SRyolo_MF.yaml", "--super", "--train_img_size", "1024", "--hr_input", "--data", "{config}", "--ch", "64", "--input_mode", "RGB+IR+MF"],
+      "readiness": "needs_external_environment_and_dataset_adapter"
+    },
+    "icafusion_hbb": {
+      "title": "ICAFusion: Iterative Cross-Attention Guided Feature Fusion for Multispectral Object Detection",
+      "authors": "Jifeng Shen et al.",
+      "venue": "Pattern Recognition (2023)",
+      "paper_url": "https://doi.org/10.1016/j.patcog.2023.109913",
+      "source": "https://github.com/chanchanchan97/ICAFusion.git",
+      "source_kind": "authors_official",
+      "source_required": ["README.md", "train.py"],
+      "prediction_geometry": "hbb",
+      "modality": "paired_RGB_IR",
+      "official_dataset": "VEDAI, FLIR, KAIST",
+      "training_requirements": "Official upstream architecture/config; convert exact split and class mapping; upstream training environment; same HBB evaluator",
+      "readiness": "upstream_source_verified_command_requires_adaptation"
+    },
+    "cft_hbb": {
+      "title": "Cross-Modality Fusion Transformer for Multispectral Object Detection",
+      "authors": "Qingyun Fang, Dapeng Han, Zhaokui Wang",
+      "venue": "arXiv:2111.00273 (2021; cite as preprint, not journal)",
+      "paper_url": "https://arxiv.org/abs/2111.00273",
+      "source": "https://github.com/DocF/multispectral-object-detection.git",
+      "source_kind": "authors_official",
+      "source_required": ["README.md", "train.py", "test.py"],
+      "prediction_geometry": "hbb",
+      "modality": "paired_RGB_IR",
+      "official_dataset": "VEDAI, FLIR, LLVIP",
+      "training_requirements": "Original CFT Transformer x3 configuration; prepare paired input and custom split; original HBB evaluation",
+      "readiness": "upstream_source_verified_command_requires_adaptation"
+    }
+  }
+}
