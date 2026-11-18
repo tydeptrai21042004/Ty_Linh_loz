@@ -82,7 +82,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
 
     train = sub.add_parser("train", help="Train the SJPA-TR OBB model")
-    train.add_argument("--data", required=True, help="YAML path or public:<dataset> (m3fd, vedai, flir-aligned, rgbtdroneperson, cvc-14)")
+    train.add_argument("--data", required=True, help="YAML path or public:<dataset> (m3fd, vedai, dronevehicle, flir-aligned, rgbtdroneperson, cvc-14)")
     _add_public_data_options(train)
     train.add_argument("--model", default=DEFAULT_MODEL)
     train.add_argument("--epochs", type=int, default=100)
@@ -112,7 +112,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     val = sub.add_parser("val", help="Validate a checkpoint")
     val.add_argument("--weights", required=True)
-    val.add_argument("--data", required=True, help="YAML path or public:<dataset> (m3fd, vedai, flir-aligned, rgbtdroneperson, cvc-14)")
+    val.add_argument("--data", required=True, help="YAML path or public:<dataset> (m3fd, vedai, dronevehicle, flir-aligned, rgbtdroneperson, cvc-14)")
     _add_public_data_options(val)
     val.add_argument("--split", choices=("train", "val", "test"), default="val")
     val.add_argument("--batch", type=int, default=4)
@@ -159,7 +159,7 @@ def build_parser() -> argparse.ArgumentParser:
                         help="Require the original target epoch count and an exact-mode checkpoint")
 
     check = sub.add_parser("check-data", help="Validate RGB/IR pairs, labels, and dataset fingerprint")
-    check.add_argument("--data", required=True, help="YAML path or public:<dataset> (m3fd, vedai, flir-aligned, rgbtdroneperson, cvc-14)")
+    check.add_argument("--data", required=True, help="YAML path or public:<dataset> (m3fd, vedai, dronevehicle, flir-aligned, rgbtdroneperson, cvc-14)")
     _add_public_data_options(check)
     check.add_argument("--task", choices=("obb", "detect"), default="obb")
     check.add_argument("--max-errors", type=int, default=100)

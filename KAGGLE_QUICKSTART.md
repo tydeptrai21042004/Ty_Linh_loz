@@ -1,14 +1,26 @@
-# One-click Kaggle benchmark (paper baselines only)
+# Kaggle quick start — three DOI datasets and 111 planned trainings
 
-**Artifacts**: `Ty_Linh_Paper_Benchmark_Full_Corrected.zip` (full repository), `Ty_Linh_Paper_Benchmark_Changes_Only.zip` (patch for the newest `Ty_Linh_loz-main(1).zip`), and `Kaggle_Run_PaperOnly_E2E.py` (notebook entry).
+See `RESEARCH_111_RUN_PLAN.md` for the complete experiment protocol.
 
-1. Upload the full corrected ZIP as a Kaggle Dataset input and enable **GPU** and **Internet**. Review/accept the VEDAI dataset terms.
-2. Run `Kaggle_Run_PaperOnly_E2E.py` in a Kaggle notebook with `!python /kaggle/input/<notebook-dataset>/Kaggle_Run_PaperOnly_E2E.py`, or paste its code in a notebook cell.
-3. The script searches exactly one corrected repository ZIP in `/kaggle/input/`, restores the source, downloads/preprocesses paired VEDAI-512 and creates a new 3-way deterministic train/val/test split. Both modalities are encoded to the SAME JPEG format for all methods.
-4. It trains **MR-SJPA (proposal)** and **ETFNet (published original author code)** with three matched seeds (0/1/2) and attempts exact checkpoint resume where available. The paper baseline is **not** a local Concat/Add fusion substitute.
-5. After training, it selects real `best.pt` weights using validation, runs one independent test evaluation per seed, saves actual OBB predictions, evaluates each with the SAME polygon-IoU AP101 implementation and emits a statistics package (mean, SD, 95% t CI, paired deltas/t-test, exact sign-flip p, LaTeX table).
-6. Output: `/kaggle/working/PAPER_ONLY_THREE_SEED_RESULTS.zip`.
+1. Upload `Ty_Linh_111_Experiments_Full_Corrected.zip` as a Kaggle Dataset input; enable **GPU** and **Internet**.
+2. Place `Kaggle_Run_111_Experiments.py` in a notebook cell, or run its downloaded path.
+3. Review the VEDAI, DroneVehicle and M3FD license and distribution terms; the entry script passes `--accept-license` only as an explicit user responsibility.
+4. To train original C²Former alongside ETFNet, set `C2FORMER_PYTHON` to a compatible installed MMRotate 0.3.x interpreter. If not available, set `EXCLUDE_C2FORMER=1`: the pipeline becomes 102 training jobs, and C²Former is **not** reported as a completed baseline.
+5. Save the Kaggle output `research/` and prepared `datasets/` across independent sessions. `MAX_NEW_TRAINING_JOBS=8` and `MAX_NEW_EVALUATIONS=63` bound work per Kaggle launch.
+6. Final paper tables and figures are emitted only after all required real checkpoints and common-evaluator test receipts exist.
 
-Optional: Set environment `ETFNET_AUTHOR_SHA` to a pinned original upstream commit; recommended for final published results. Set `C2FORMER_PYTHON` to a compatible separate MMRotate 0.3.x interpreter to automatically add the third *original-paper* C²Former baseline. The default Kaggle image is **not** known compatible with legacy C²Former; if no compatible environment is supplied, results are labelled **2-method only**, never 3-method.
+For a no-GPU preliminary count:
 
-**Reality check:** CPU unit/integration tests passed. Real dataset download, author-code GPU training and legacy C²Former environment have **not** been executed here. Public host availability, CUDA ABI and upstream loader compatibility may cause a clear error rather than silent substitution. This is a **new VEDAI held-out benchmark**, not exact reproduction of the papers' originally published numbers. See `PAPER_BENCHMARK_E2E.md`.
+```bash
+python paper_research_pipeline.py --stage plan
+```
+
+For a dataset download/format test:
+
+```bash
+python layout_manager.py restore
+pip install -r requirements-data.txt
+python paper_three_datasets.py --datasets vedai dronevehicle m3fd --accept-license
+```
+
+The uploaded package has local tests, **not** a verified complete remote download or GPU run. Source-provider failures, disk quotas and CUDA/MMRotate incompatibilities must be resolved before publication claims. There is no dummy data fallback.

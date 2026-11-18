@@ -4,7 +4,7 @@ This program MUST be launched with cwd/PYTHONPATH set to either the proposal
 source or the official ETFNet clone. It refuses accidental cross-imports.
 """
 from __future__ import annotations
-import argparse,json,os,sys
+import argparse,json,os,sys,hashlib
 from pathlib import Path
 
 
@@ -56,13 +56,16 @@ def main():
                   max_det=300,ch=6)
     project_path=Path(a.project)/a.name
     pred=project_path/'predictions.json'
-    # Genuine empty-prediction cases are measurable as mAP=0, but only if
-    # validation returned normally, as witnessed by this signed worker receipt.
-    if not pred.exists():
-        pred.write_text('[]\n')
-    if not isinstance(json.loads(pred.read_text()),list):
+    # The validator itself must persist even an empty list. Missing JSON
+    # means validation did not supply trustworthy prediction evidence.
+    if not pred.is_file():
+        raise RuntimeError('Validator failed to produce predictions.json; refusing fabricated empty predictions')
+    validated_predictions=json.loads(pred.read_text())
+    if not isinstance(validated_predictions,list):
         raise RuntimeError('No valid OBB predictions.json list from validator')
-    report={'status':'completed','predictions':str(pred),'imported_ultralytics':str(imported),
+    report={'status':'completed','predictions':str(pred),
+            'predictions_sha256':hashlib.sha256(pred.read_bytes()).hexdigest(),
+            'n_predictions':len(validated_predictions),'imported_ultralytics':str(imported),
             'save_dir':str(project_path),'split':'test','imgsz':a.imgsz,'seed':a.seed,
             'postprocessing':{'conf':0.001,'iou':0.70,'max_det':300,'obb':True},
             'validator_stats':getattr(val,'results_dict',{}),

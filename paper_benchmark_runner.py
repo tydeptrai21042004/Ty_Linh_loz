@@ -1,9 +1,9 @@
-"""Auto-acquire VEDAI and evaluate proposed MR-SJPA against authors' ETFNet.
+"""Auto-acquire selected published RGB/IR datasets and benchmark the proposal vs authors' ETFNet.
 
 Full successful runtime requires Kaggle GPU, Internet, usable authors' source,
 compatible dependencies and license acceptance. Incompatible author code stops
 with an explicit error rather than inventing a surrogate paper baseline.
-Original ETFNet paper scores are NOT reproduced; this is a new VEDAI split.
+Original ETFNet paper scores are NOT reproduced; these are new per-dataset OBB splits.
 """
 from __future__ import annotations
 import argparse,csv,hashlib,json,os,shutil,subprocess,sys,zipfile
@@ -80,7 +80,7 @@ def filehash(p):
 
 def pipeline(a):
     work=Path(a.work).resolve();work.mkdir(parents=True,exist_ok=True)
-    result=work/'paper_e2e_results';result.mkdir(exist_ok=True)
+    result=work/'paper_e2e_results'/a.dataset;result.mkdir(parents=True,exist_ok=True)
     repo=Path(a.repo).resolve() if a.repo else work/'MR_SJPA_repository'
     if a.zip:
         get_source_from_uploaded_zip(a.zip,repo)
@@ -94,17 +94,17 @@ def pipeline(a):
     if a.require_pinned_source and not a.etfnet_sha:raise ValueError('Set --etfnet-sha to lock original author commit')
     run([sys.executable,'-m','pip','install','--no-deps','-e','.'],cwd=repo)
     # Optional providers required for multi-file official VEDAI download.
-    run([sys.executable,'-m','pip','install','-q','gdown>=6,<7','py7zr>=0.22,<2'])
-    data_root=work/'datasets';downloaded=data_root/'vedai/processed/512/data.yaml'
-    if not downloaded.exists():
-        if not a.accept_license:raise PermissionError('Review VEDAI dataset terms, then pass --accept-license')
-        run([sys.executable,'etfnet_cli.py','download-data','--dataset','vedai','--variant','512',
-             '--task','obb','--output',data_root,'--accept-license','--validate'],cwd=repo,
-             log=result/'logs/data_download.log')
-    if not downloaded.is_file():raise RuntimeError('Dataset download/preparation did not produce data.yaml')
-    split_yaml=work/'vedai_heldout_paper'/'data.yaml'
-    run([sys.executable,repo/'paper_benchmark_dataset.py','--data',downloaded,
-         '--out',split_yaml.parent,'--test-fraction',str(a.test_fraction),'--seed',str(a.split_seed)])
+    run([sys.executable,'-m','pip','install','-q','gdown>=6,<7','py7zr>=0.22,<2','huggingface_hub>=0.25,<2'])
+    data_root=work/'datasets'
+    if not a.accept_license:
+        raise PermissionError('Review license terms for the selected dataset and pass --accept-license')
+    run([sys.executable,repo/'paper_three_datasets.py','--datasets',a.dataset,
+         '--output',data_root,'--accept-license','--split-seed',str(a.split_seed),
+         '--test-fraction',str(a.test_fraction)],cwd=repo,
+         log=result/'logs/data_download_and_preprocess.log')
+    split_yaml=data_root/a.dataset/'paper_heldout'/'data.yaml'
+    if not split_yaml.is_file():
+        raise RuntimeError(f'Dataset {a.dataset} preparation did not produce test-ready data.yaml')
     run([sys.executable,repo/'etfnet_cli.py','check-data','--data',split_yaml,'--task','obb',
          '--fingerprint','sha256','--output',result/'dataset_audit.json'],cwd=repo)
     if not json.loads((result/'dataset_audit.json').read_text())['ok']:
@@ -113,9 +113,9 @@ def pipeline(a):
     provenance={'source_zip_sha256':filehash(a.zip) if a.zip else None,'proposal_source':str(repo),
                 'official_etfnet_url':AUTHOR,'official_etfnet_commit':sha,
                 'official_etfnet_model_sha256':filehash(upstream/METHODS['etfnet_official_paper']),
-                'dataset_yaml':str(split_yaml),'heldout_manifest_sha256':filehash(split_yaml.parent/'heldout_manifest.json'),
+                'dataset':a.dataset, 'dataset_yaml':str(split_yaml),'heldout_manifest_sha256':filehash(split_yaml.parent/'heldout_manifest.json'),
                 'training':{'epochs':a.epochs,'batch':a.batch,'imgsz':a.imgsz,'device':a.device},
-                'seeds':[0,1,2], 'scope':'VEDAI new paired heldout OBB comparison, not original ETFNet metric reproduction',
+                'seeds':[0,1,2], 'scope':f'{a.dataset} new paired heldout OBB comparison, not original ETFNet metric reproduction',
                 'status':'in_progress'}
     (result/'provenance.json').write_text(json.dumps(provenance,indent=2)+'\n')
     worker=work/'paper_source_isolated_worker.py'
@@ -163,26 +163,28 @@ def pipeline(a):
             (result/'completed_receipts.json').write_text(json.dumps(receipts,indent=2)+'\n')
     sys.path.insert(0,str(repo))
     from paper_benchmark_stats import generate
-    stat=generate(receipts,result/'paper_statistics')
+    stat=generate(receipts,result/'paper_statistics',dataset_name=a.dataset)
     provenance['c2former_status']='not_executed_no_compatible_legacy_environment'
     if a.c2former_python:
         run([sys.executable,repo/'paper_c2former_3seed.py','--python',a.c2former_python,
-             '--data',split_yaml,'--workspace',work/'c2former_workspace','--epochs',a.epochs],
+             '--data',split_yaml,'--workspace',work/f'c2former_workspace_{a.dataset}','--epochs',a.epochs],
             cwd=repo,log=result/'logs/c2former_three_seed.log')
-        c2_receipts=json.loads((work/'c2former_workspace/paper_c2former_results/receipts.json').read_text())
+        c2_receipts=json.loads((work/f'c2former_workspace_{a.dataset}/paper_c2former_results/receipts.json').read_text())
         receipts.extend(c2_receipts)
-        stat=generate(receipts,result/'paper_statistics')
+        stat=generate(receipts,result/'paper_statistics',dataset_name=a.dataset)
         provenance['c2former_status']='completed_with_common_OBB_evaluator'
     provenance['status']='complete';provenance['statistical_report']=str(result/'paper_statistics/statistical_report.json')
     (result/'provenance.json').write_text(json.dumps(provenance,indent=2)+'\n')
-    shutil.make_archive(str(work/'PAPER_ONLY_THREE_SEED_RESULTS'),'zip',result)
-    print('Completed: '+str(work/'PAPER_ONLY_THREE_SEED_RESULTS.zip'))
+    shutil.make_archive(str(work/f'PAPER_ONLY_{a.dataset.upper()}_THREE_SEED_RESULTS'),'zip',result)
+    print('Completed: '+str(work/f'PAPER_ONLY_{a.dataset.upper()}_THREE_SEED_RESULTS.zip'))
     return stat
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--zip',type=Path,help='Full corrected uploaded ZIP')
+    p.add_argument('--dataset',choices=('vedai','dronevehicle','m3fd'),default='vedai')
+    p.add_argument('--all-datasets',action='store_true',help='Run three paper datasets sequentially; needs substantial storage')
     p.add_argument('--repo',type=Path,help='Already extracted corrected project')
     p.add_argument('--work',type=Path,default=Path('/kaggle/working'))
     p.add_argument('--epochs',type=int,default=100)
@@ -198,6 +200,8 @@ def main():
     p.add_argument('--test-fraction',type=float,default=.2)
     args=p.parse_args()
     if args.epochs<1 or args.batch<1 or args.imgsz<32:raise ValueError('Bad training options')
-    pipeline(args)
+    for dataset in ('vedai','dronevehicle','m3fd') if args.all_datasets else (args.dataset,):
+        args.dataset=dataset
+        pipeline(args)
 
 if __name__=='__main__':main()

@@ -4,6 +4,7 @@ Supported datasets
 ------------------
 - M3FD (official Google Drive folder)
 - VEDAI 512/1024 (official GREYC multipart archives)
+- DroneVehicle (public Hugging Face mirror of author ZIP archives, native OBB)
 - FLIR-Aligned (authors' Google Drive file with public archive fallback)
 - RGBTDronePerson (official Google Drive folder)
 - CVC-14 (ModelScope mirror of the CVC release; local-archive fallback)
@@ -61,6 +62,8 @@ FLIR_FALLBACK_URL = (
     "https://huggingface.co/datasets/UserNae3/FLIR_aligned/resolve/main/aligned.zip?download=true"
 )
 CVC_MODELSCOPE_ID = "OmniData/CVC-14"
+DRONEVEHICLE_HF_REPO = "McCheng/DroneVehicle"  # Unofficial mirror of author-released data.
+M3FD_HF_REPO = "nonameplease/M3FD_Detecion"  # Unofficial fallback; verify contents.
 VEDAI_BASE = "https://downloads.greyc.fr/vedai"
 
 
@@ -112,6 +115,22 @@ ADDITIONAL_DATASETS: dict[str, PublicDatasetSpec] = {
         variants=("512", "1024"),
         default_variant="512",
         classes=VEDAI_CLASS_NAMES,
+    ),
+    "dronevehicle": PublicDatasetSpec(
+        key="dronevehicle",
+        title="DroneVehicle RGB-Infrared Oriented Vehicle Detection",
+        description="28,439 RGB/thermal image pairs with native oriented vehicle annotations.",
+        homepage="https://github.com/VisDrone/DroneVehicle",
+        citation_doi="10.1109/TCSVT.2022.3168279",
+        dataset_doi=None,
+        license_name="Author-provided DroneVehicle research terms (check source)",
+        license_url="https://github.com/VisDrone/DroneVehicle",
+        archive_name="train.zip+val.zip+test.zip",
+        download_url=f"huggingface-dataset:{DRONEVEHICLE_HF_REPO}",
+        expected_download_gb=14.0,
+        variants=("default",),
+        default_variant="default",
+        classes=("car", "truck", "bus", "van", "freight car"),
     ),
     "flir-aligned": PublicDatasetSpec(
         key="flir-aligned",
@@ -191,6 +210,36 @@ def _require_optional(module: str, install_hint: str):
 def _gdown_major(gdown: Any) -> int:
     match = re.match(r"(\d+)", str(getattr(gdown, "__version__", "0")))
     return int(match.group(1)) if match else 0
+
+
+def _download_hf_zip_files(repo_id: str, filenames: Sequence[str], destination: Path) -> Path:
+    """Retrieve public dataset archives from an explicitly identified HF mirror.
+
+    hf_hub_download performs resumable transfers and verifies its own cache.
+    This is not an official-author host; provenance is recorded in the manifest.
+    """
+    try:
+        from huggingface_hub import hf_hub_download
+    except ImportError as exc:
+        raise DatasetPreparationError("Install huggingface_hub>=0.25 for the public HF mirrors") from exc
+    destination.mkdir(parents=True, exist_ok=True)
+    for filename in filenames:
+        target = destination / filename
+        if target.exists() and target.stat().st_size > 0:
+            continue
+        try:
+            cached = Path(hf_hub_download(repo_id=repo_id, filename=filename, repo_type="dataset"))
+        except Exception as exc:
+            raise DatasetPreparationError(
+                f"Could not retrieve {repo_id}/{filename}; the mirror may be gated, unavailable, or rate limited. "
+                "Use --archive with the corresponding author-released data."
+            ) from exc
+        if target.exists(): target.unlink()
+        try:
+            os.link(cached, target)  # avoids a second copy of large archives
+        except OSError:
+            shutil.copy2(cached, target)
+    return destination
 
 
 def _download_gdrive_folder(folder_id: str, destination: Path) -> Path:
@@ -628,34 +677,130 @@ def _split_hint(path: Path) -> str | None:
 
 
 def _prepare_m3fd(raw: Path, spec: PublicDatasetSpec, val_fraction: float, seed: int) -> list[PairSample]:
-    roots = [p for p in [raw, *raw.rglob("*")] if p.is_dir() and (p / "vi").is_dir() and (p / "ir").is_dir()]
-    if not roots:
-        raise DatasetPreparationError("M3FD layout not found: expected sibling vi/, ir/, labels/, and meta/ directories.")
-    root = min(roots, key=lambda p: len(p.parts))
-    vi, ir = root / "vi", root / "ir"
-    labels_dir, meta = root / "labels", root / "meta"
+    """Parse official M3FD and the separately extracted HF vi/ir/labels ZIPs.
+
+    Do not silently treat missing detection labels as background-only frames.
+    The 4-point OBB output is an axis-aligned HBB conversion, NOT native OBB.
+    """
+    vi = _find_named_dir(raw, ("vi", "visible"))
+    ir = _find_named_dir(raw, ("ir", "infrared"))
+    labels_dir = _find_named_dir(raw, ("labels", "label", "yolo_labels", "annotations", "annotation"))
+    if not vi or not ir or not labels_dir:
+        raise DatasetPreparationError("M3FD requires vi/, ir/ and labels/ folders, possibly inside separate archives")
+    root = vi.parent if vi.parent == ir.parent else raw
+    meta = root / "meta"
     train_keys = _read_split_manifest(meta / "train.txt")
     val_keys = _read_split_manifest(meta / "val.txt")
+    indexed_ir = {p.stem.lower(): p for p in _image_files(ir)}
+    indexed_labels = {p.stem.lower(): p for p in labels_dir.rglob("*.xml")}
+    indexed_labels.update({p.stem.lower(): p for p in labels_dir.rglob("*.txt")})
     samples: list[PairSample] = []
     for rgb in _image_files(vi):
         relative = rgb.relative_to(vi)
-        partner = (ir / relative)
-        if not partner.is_file():
-            matches = [p for p in ir.rglob(rgb.stem + ".*") if p.suffix[1:].lower() in IMG_FORMATS]
-            partner = matches[0] if matches else Path()
+        partner = ir / relative
+        if not partner.is_file():partner = indexed_ir.get(rgb.stem.lower(), Path())
         if not partner.is_file():
             raise DatasetPreparationError(f"M3FD infrared partner missing for {relative}")
-        width, height = _read_image_size(rgb)
         label = labels_dir / relative.with_suffix(".txt")
-        labels = _parse_yolo_source(label if label.is_file() else None, width, height, len(spec.classes))
+        if not label.is_file():label = indexed_labels.get(rgb.stem.lower(), Path())
+        if not label.is_file():
+            raise DatasetPreparationError(f"M3FD label missing for {relative}; refusing a false background annotation")
+        width, height = _read_image_size(rgb)
+        labels = (_parse_voc(label, spec.classes) if label.suffix.lower() == ".xml" else
+                  _parse_yolo_source(label, width, height, len(spec.classes)))
         key = rgb.stem.lower()
-        if key in val_keys:
-            split = "val"
-        elif key in train_keys:
-            split = "train"
-        else:
-            split = _deterministic_split(key, val_fraction, seed)
+        split = "val" if key in val_keys else ("train" if key in train_keys else _deterministic_split(key, val_fraction, seed))
         samples.append(PairSample(relative.with_suffix("").as_posix(), rgb, partner, labels, split))
+    if not samples:
+        raise DatasetPreparationError("M3FD contains no paired RGB/IR samples")
+    return samples
+
+
+def _dronevehicle_polygon(path: Path, width: int, height: int, spec: PublicDatasetSpec,
+                          crop_border: int) -> tuple[ObjectLabel, ...]:
+    """Read original RGB XML polygons, keep object orientation and crop offset."""
+    aliases = {"feright car": "freight car", "feright_car": "freight car", "freightcar": "freight car"}
+    class_to_id = {name: idx for idx, name in enumerate(spec.classes)}
+    try:
+        root = ET.parse(path).getroot()
+    except (ET.ParseError, OSError) as exc:
+        raise DatasetPreparationError(f"Unreadable DroneVehicle XML: {path}") from exc
+    result: list[ObjectLabel] = []
+    for obj in root.findall(".//object"):
+        name = (obj.findtext("name") or "").strip().lower()
+        name = aliases.get(name, name)
+        if name not in class_to_id:
+            raise DatasetPreparationError(f"Unknown DroneVehicle class {name!r} in {path}")
+        polygon = obj.find("polygon")
+        if polygon is None:
+            raise DatasetPreparationError(f"DroneVehicle XML lacks native oriented polygon: {path}")
+        try:
+            points = tuple((float(polygon.findtext(f"x{i}")) - crop_border,
+                            float(polygon.findtext(f"y{i}")) - crop_border) for i in range(1, 5))
+        except (ValueError, TypeError) as exc:
+            raise DatasetPreparationError(f"Invalid polygon vertex in {path}") from exc
+        clipped = _clip_points(points, width, height)
+        area = abs(cv2.contourArea(np.asarray(clipped, dtype=np.float32)))
+        if area < 1.0:continue
+        result.append(ObjectLabel(class_to_id[name], clipped))
+    return tuple(result)
+
+
+def _prepare_dronevehicle(raw: Path, spec: PublicDatasetSpec, val_fraction: float,
+                          seed: int) -> list[PairSample]:
+    """Build native-OBB DroneVehicle pairs from author-format train/val/test archives.
+
+    RGB polygons are the declared shared supervision convention: IR labels
+    differ in instance count and cannot be silently treated as identical.
+    Images with 100-pixel borders are cropped to 640x512 and polygons adjusted.
+    """
+    del val_fraction, seed
+    samples: list[PairSample] = []
+    crop_root = raw / "_dronevehicle_cropped"
+    for split in ("train", "val", "test"):
+        rgb_dir = _find_named_dir(raw, (f"{split}img",))
+        ir_dir = _find_named_dir(raw, (f"{split}imgr",))
+        label_dir = _find_named_dir(raw, (f"{split}label",))
+        if not rgb_dir and not ir_dir and not label_dir:
+            continue
+        if not rgb_dir or not ir_dir or not label_dir:
+            raise DatasetPreparationError(f"Incomplete DroneVehicle {split}: need RGB, IR and original RGB labels")
+        infrared = {p.stem.lower():p for p in _image_files(ir_dir)}
+        xmls = {p.stem.lower():p for p in label_dir.glob("*.xml")}
+        if not infrared or not xmls:raise DatasetPreparationError(f"DroneVehicle split {split} lacks images/XML")
+        split_count = 0
+        for rgb in _image_files(rgb_dir):
+            ir = infrared.get(rgb.stem.lower())
+            label = xmls.get(rgb.stem.lower())
+            if ir is None or label is None:
+                raise DatasetPreparationError(f"Unpaired DroneVehicle RGB/IR/XML: {split}/{rgb.name}")
+            rgb_size = _read_image_size(rgb)
+            ir_size = _read_image_size(ir)
+            if rgb_size != ir_size:raise DatasetPreparationError(f"DroneVehicle RGB/IR size mismatch: {rgb}")
+            if rgb_size == (840, 712):
+                crop=100; width,height=640,512
+                rgb_cropped=crop_root / split / 'rgb' / rgb.name
+                ir_cropped=crop_root / split / 'ir' / rgb.name
+                for src, dst in ((rgb,rgb_cropped),(ir,ir_cropped)):
+                    if not dst.is_file():
+                        im=cv2.imread(str(src),cv2.IMREAD_UNCHANGED)
+                        if im is None:raise DatasetPreparationError(f"Unreadable DroneVehicle image: {src}")
+                        dst.parent.mkdir(parents=True,exist_ok=True)
+                        if not cv2.imwrite(str(dst),im[100:612,100:740]):
+                            raise DatasetPreparationError(f"Failed to crop DroneVehicle image: {src}")
+                rgb,ir=rgb_cropped,ir_cropped
+            elif rgb_size == (640,512):
+                crop=0; width,height=640,512
+            else:
+                raise DatasetPreparationError(f"Unexpected DroneVehicle resolution {rgb_size} at {rgb}")
+            labels=_dronevehicle_polygon(label,width,height,spec,crop)
+            samples.append(PairSample(f"{split}/{rgb.stem}",rgb,ir,labels,split))
+            split_count += 1
+        if split_count==0:raise DatasetPreparationError(f"DroneVehicle {split} has no valid paired samples")
+    if not samples:
+        raise DatasetPreparationError("DroneVehicle source layout missing trainimg/trainimgr/trainlabel folders")
+    if not {'train','val','test'}.issubset({s.split for s in samples}):
+        raise DatasetPreparationError("For the three-dataset paper benchmark DroneVehicle must contain train/val/test")
     return samples
 
 
@@ -1048,6 +1193,9 @@ def _canonicalize(samples: Sequence[PairSample], output_root: Path, spec: Public
         "statistics": {"pairs": sum(split_counts.values()), "objects": objects,
                        "splits": dict(split_counts), "link_methods": dict(link_methods)},
         "data_yaml": str(data_yaml),
+        "annotation_geometry": ("native_obb" if spec.key in {"vedai", "dronevehicle"} else "hbb_converted_to_axis_aligned_polygon"),
+        "annotation_convention": ("RGB XML polygons shared across paired modalities" if spec.key == "dronevehicle" else "source annotation"),
+        "download_origin": ("unofficial Hugging Face mirror of author archive" if spec.key == "dronevehicle" else "dataset registry; see download_url"),
     }
     (processed / "SOURCE_MANIFEST.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
     marker.write_text(json.dumps({"schema_version": 2, "data_yaml": str(data_yaml),
@@ -1060,7 +1208,23 @@ def _download_source(spec: PublicDatasetSpec, root: Path, variant: str, force: b
     if spec.key == "m3fd":
         target = downloads / "m3fd"
         if force and target.exists(): shutil.rmtree(target)
-        return _download_gdrive_folder(M3FD_DRIVE_FOLDER, target) if not any(target.rglob("*")) else target
+        # Prefer the author-released source. If Google Drive fails, fall back
+        # to explicitly documented publicly accessible mirrors.
+        if not any(target.rglob("*.zip")) and not _find_named_dir(target, ("vi", "visible")):
+            try:
+                _download_gdrive_folder(M3FD_DRIVE_FOLDER, target)
+            except DatasetPreparationError:
+                pass
+            has_archives = any(p.suffix.lower() in {".zip", ".tar", ".7z"} for p in target.rglob("*"))
+            has_dirs = bool(_find_named_dir(target, ("vi", "visible")) and
+                            _find_named_dir(target, ("ir", "infrared")))
+            if not has_archives and not has_dirs:
+                _download_hf_zip_files(M3FD_HF_REPO, ("vi.zip", "ir.zip", "labels.zip"), target)
+        return target
+    if spec.key == "dronevehicle":
+        target = downloads / "dronevehicle"
+        if force and target.exists(): shutil.rmtree(target)
+        return _download_hf_zip_files(DRONEVEHICLE_HF_REPO, ("train.zip", "val.zip", "test.zip"), target)
     if spec.key == "rgbtdroneperson":
         target = downloads / "rgbtdroneperson"
         if force and target.exists(): shutil.rmtree(target)
@@ -1149,6 +1313,8 @@ def prepare_additional_dataset(
             samples = _prepare_m3fd(extracted, spec, val_fraction, split_seed)
         elif key == "vedai":
             samples = _prepare_vedai(extracted, spec, variant, val_fraction, split_seed)
+        elif key == "dronevehicle":
+            samples = _prepare_dronevehicle(extracted, spec, val_fraction, split_seed)
         elif key == "flir-aligned":
             samples = _prepare_flir(extracted, spec, val_fraction, split_seed)
         elif key == "rgbtdroneperson":

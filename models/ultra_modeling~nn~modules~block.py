@@ -2570,7 +2570,7 @@ class MR_SJPA(MPCRF):
                  eps: float = 1e-3, coherence_tau: float = 0.30,
                  gate_k: float = 10.0, trust_radius: float = 0.25,
                  max_shift: int = 1, shift_penalty: float = 0.01,
-                 shift_margin: float = 0.01):
+                 shift_margin: float = 0.01, ablation: int = 0):
         super().__init__(channels, groups, stat_grid, eps, coherence_tau,
                          gate_k, trust_radius)
         if max_shift < 0 or shift_penalty < 0 or shift_margin < 0:
@@ -2578,6 +2578,9 @@ class MR_SJPA(MPCRF):
         self.max_shift = int(max_shift)
         self.shift_penalty = float(shift_penalty)
         self.shift_margin = float(shift_margin)
+        if ablation not in (0, 1, 2, 3, 4, 5):
+            raise ValueError("Unknown MR-SJPA ablation")
+        self.ablation = int(ablation)
 
     @torch.no_grad()
     def _shift_scores(self, rgb: torch.Tensor, ir: torch.Tensor):
@@ -2640,25 +2643,39 @@ class MR_SJPA(MPCRF):
         if rgb.shape != ir.shape or rgb.ndim != 4:
             raise ValueError('MR_SJPA expects two matching BCHW modality tensors')
         raw = torch.cat((rgb, ir), dim=1)
-        offsets, gain, scores = self._shift_scores(rgb, ir)
-        aligned_ir = self._translate_once(ir, offsets)
-        rgb_candidate, ir_candidate, coherence, singular = self._canonical_candidates(rgb, aligned_ir)
-        gate = torch.sigmoid(self.gate_k * (coherence - self.coherence_tau)).detach()
+        if self.ablation == 1:  # No spatial correction, keep statistical alignment.
+            offsets = torch.zeros((rgb.shape[0], 2), device=rgb.device, dtype=torch.long)
+            gain = torch.zeros(rgb.shape[0], device=rgb.device, dtype=torch.float32)
+            scores = torch.zeros((rgb.shape[0], 1), device=rgb.device, dtype=torch.float32)
+            aligned_ir = ir
+        else:
+            offsets, gain, scores = self._shift_scores(rgb, ir)
+            aligned_ir = self._translate_once(ir, offsets)
+        if self.ablation == 2:  # Spatial-only residual without Procrustes.
+            rgb_candidate, ir_candidate = rgb, aligned_ir
+            coherence = torch.ones((rgb.shape[0], self.groups), device=rgb.device, dtype=torch.float32)
+            singular = coherence
+        else:
+            rgb_candidate, ir_candidate, coherence, singular = self._canonical_candidates(rgb, aligned_ir)
+        gate = (torch.ones_like(coherence) if self.ablation == 3 else
+                torch.sigmoid(self.gate_k * (coherence - self.coherence_tau))).detach()
         gate_map = gate.unsqueeze(-1).unsqueeze(-1).repeat_interleave(
             self.group_width, dim=1).to(rgb.dtype)
-        delta_rgb = F.conv2d(gate_map * (rgb_candidate - rgb),
-                             self.rgb_residual_weight, groups=self.groups)
+        delta_rgb = (torch.zeros_like(rgb) if self.ablation == 5 else
+                     F.conv2d(gate_map * (rgb_candidate - rgb),
+                              self.rgb_residual_weight, groups=self.groups))
         delta_ir = F.conv2d(gate_map * (ir_candidate - ir),
                             self.ir_residual_weight, groups=self.groups)
         correction = torch.cat((delta_rgb, delta_ir), 1)
         raw_norm = self._sample_norm(raw)
         correction_norm = self._sample_norm(correction)
         radius = self.trust_radius * raw_norm
-        scale = torch.minimum(torch.ones_like(radius),
-                              radius / (correction_norm + self.eps)).to(correction.dtype)
+        scale = (torch.ones_like(radius) if self.ablation == 4 else
+                 torch.minimum(torch.ones_like(radius),
+                               radius / (correction_norm + self.eps))).to(correction.dtype)
         output = raw + scale * correction
         return output, {
-            'raw': raw, 'offset': offsets, 'improvement': gain,
+            'raw': raw, 'ablation': self.ablation, 'offset': offsets, 'improvement': gain,
             'score_matrix': scores, 'coherence': coherence,
             'singular_values': singular, 'gate': gate,
             'correction_norm': correction_norm, 'radius': radius,

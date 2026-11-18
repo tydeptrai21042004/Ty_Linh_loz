@@ -34,7 +34,7 @@ def _paired(a,b):
             'warning':'Three seeds give low-power significance evidence; exact sign-flip p cannot be below 0.25 for n=3.'}
 
 
-def generate(rows,output,*,proposal='mr_sjpa_proposal',baseline='etfnet_official_paper',required_seeds=(0,1,2)):
+def generate(rows,output,*,proposal='mr_sjpa_proposal',baseline='etfnet_official_paper',required_seeds=(0,1,2),dataset_name=None):
     output=Path(output);output.mkdir(parents=True,exist_ok=True)
     index={};contracts=[]
     for r in rows:
@@ -61,7 +61,9 @@ def generate(rows,output,*,proposal='mr_sjpa_proposal',baseline='etfnet_official
     paired={f'{proposal}_minus_{other}':{m:_paired([float(index[(proposal,seed)][m]) for seed in seeds],
                       [float(index[(other,seed)][m]) for seed in seeds]) for m in METRICS}
             for other in ordered if other!=proposal}
-    payload={'scope':'new held-out VEDAI benchmark; not original-paper metric reproduction',
+    dataset_name=dataset_name or 'dataset specified in common-evaluator receipts'
+    payload={'scope':f'new held-out {dataset_name} benchmark; not original-paper metric reproduction',
+             'dataset':dataset_name,
              'seeds':seeds,'methods':ordered,'per_method':stats,'paired':paired,
              'test_evaluated_after_checkpoint_selection':True,
              'protocol':{f:rows[0][f] for f in ('evaluator_id','dataset_digest','split_digest','class_order','iou_thresholds','eval_geometry','eval_split')},
@@ -79,9 +81,9 @@ def generate(rows,output,*,proposal='mr_sjpa_proposal',baseline='etfnet_official
             w.writerow([method,stats['map50'][method]['mean'],stats['map50'][method]['sd'],
                         stats['map50_95'][method]['mean'],stats['map50_95'][method]['sd'],3])
     lines=['\\begin{table}[t]','\\centering',
-           '\\caption{Common held-out OBB evaluation on the new VEDAI split (three paired seeds).}',
+           f'\\caption{{Common held-out OBB evaluation on {dataset_name} (three paired seeds).}}',
            '\\begin{tabular}{lcc}','\\toprule','Method & mAP@0.50 & mAP@0.50:0.95 \\\\', '\\midrule']
-    for method in (proposal,baseline):
+    for method in ordered:
         f=lambda m:f"{100*stats[m][method]['mean']:.2f} $\\pm$ {100*stats[m][method]['sd']:.2f}"
         lines.append(f'{method.replace("_","\\_")} & {f("map50")} & {f("map50_95")} \\\\')
     lines+=['\\bottomrule','\\end{tabular}',

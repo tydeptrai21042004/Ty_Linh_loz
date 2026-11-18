@@ -89,6 +89,7 @@ data = [
     # gdown 6 removes the historical 50-file folder limit; it requires Python 3.10+.
     "gdown>=6.0,<7.0; python_version >= '3.10'",
     "py7zr>=0.22,<2.0",
+    "huggingface_hub>=0.25,<2.0",
     # Used only for the CVC-14 ModelScope mirror. Local archives work without it.
     "modelscope>=1.36,<2.0; python_version >= '3.10'",
 ]

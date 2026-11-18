@@ -1,3 +1,7 @@
+# CURRENT WORKFLOW (2026-11-18) — 3 datasets / 111 training jobs
+
+Read **[RESEARCH_111_RUN_PLAN.md](RESEARCH_111_RUN_PLAN.md)** and **[KAGGLE_QUICKSTART.md](KAGGLE_QUICKSTART.md)**. 3 DOI-linked datasets (VEDAI, DroneVehicle, M3FD); 13 one-seed hyperparameter trials, 9 three-seed main paper comparisons, 15 three-seed MR-SJPA ablations **per dataset**. No hyperparameter confirmation stage. Author-source baselines only (ETFNet, C²Former), with no fake method substitution. The included legacy sections below describe earlier smaller-run workflows and do not supersede the current plan. Full Kaggle GPU and public archive execution remain unverified.
+
 **Latest paper-backed benchmark:** See [PAPER_BENCHMARK_E2E.md](PAPER_BENCHMARK_E2E.md) and [KAGGLE_QUICKSTART.md](KAGGLE_QUICKSTART.md). Main matrix is only MR-SJPA versus the ORIGINAL ETFNet author source; C²Former runs through its ORIGINAL MMRotate framework in an optional separately prepared environment. Three paired seeds, independent held-out OBB test, shared polygon AP101, statistical receipts, and automatic VEDAI acquisition are implemented. GPU/cloud training remains unverified. No custom fusion-control variant is called a published-paper baseline.
 
 # MR-SJPA — RGB–IR OBB detection

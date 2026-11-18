@@ -189,8 +189,8 @@
     {
       "original": "ultra_modeling/nn/modules/block.py",
       "packed": "models/ultra_modeling~nn~modules~block.py",
-      "sha256": "04d90e3a244b84659f59f714d1283bd547b83bbef2da95dcfc25d77048da7fee",
-      "bytes": 113018
+      "sha256": "e08839a17f7f0d6dd2b5aae5ad9991f414e6f12c2b84b38793fbfc3c7f48895a",
+      "bytes": 114113
     },
     {
       "original": "ultra_modeling/nn/modules/conv.py",
@@ -279,8 +279,8 @@
     {
       "original": "ultra_runtime/data/public_multidataset.py",
       "packed": "runtime/ultra_runtime~data~public_multidataset.py",
-      "sha256": "f49d3f93d426dd2c65aab58c4ec47b5aa06d2468cf84230f68e5c05e4f68966f",
-      "bytes": 53930
+      "sha256": "c6641e7c4f29c63eb0755aaa6fba7ae8cd8cc88c073890c4c8b762ea06e2287f",
+      "bytes": 63677
     },
     {
       "original": "ultra_runtime/data/public_rgb_ir.py",
@@ -609,8 +609,8 @@
     {
       "original": "tests/multidataset_fixtures.py",
       "packed": "verification/tests~multidataset_fixtures.py",
-      "sha256": "70df9535baf05b37ed552252fa39c6b09df3286708d05e5d068dc82ec8dfda85",
-      "bytes": 3780
+      "sha256": "69ef944de1a70b7d3a04bdd351d22e82b07651189cb1420c80d1d9dcdf1a2944",
+      "bytes": 4895
     },
     {
       "original": "tests/public_dataset_fixture.py",
@@ -675,8 +675,8 @@
     {
       "original": "tests/test_multidataset_pipeline.py",
       "packed": "verification/tests~test_multidataset_pipeline.py",
-      "sha256": "3a7783be80c5b14b216f0a124fc8da41f11240db745a3e454627d6dd093b9836",
-      "bytes": 8109
+      "sha256": "5643ec86a2ca238d71bd54b96a7b1b759152959a3594a24b323ac64b0a9099ac",
+      "bytes": 8191
     },
     {
       "original": "tests/test_paper_benchmark_e2e.py",
@@ -761,6 +761,12 @@
       "packed": "verification/tools~validate_model_configs.py",
       "sha256": "03d6c761d3b211825aa26c3a7325c4d26734401e70b3b76113b649ac15748b58",
       "bytes": 1893
+    },
+    {
+      "original": "tests/test_three_datasets_pipeline.py",
+      "packed": "verification/tests~test_three_datasets_pipeline.py",
+      "sha256": "a9974c77ff57baee3cc0caf1e49c0adec7772e5ff813f559ebf276c2a96951b1",
+      "bytes": 3841
     }
   ]
 }

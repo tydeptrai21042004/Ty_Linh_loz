@@ -89,3 +89,24 @@ def create_cvc14(root: Path, pairs: int = 6) -> Path:
         label.parent.mkdir(parents=True, exist_ok=True)
         label.write_text("20 15 30 35\n", encoding="utf-8")
     return root
+
+
+def create_dronevehicle(root: Path, pairs: int = 6) -> Path:
+    """Small authentic-format paired RGB/IR & native-polygon XML fixture."""
+    from xml.etree import ElementTree as ET
+    for split in ("train", "val", "test"):
+        for i in range(pairs // 3):
+            stem = f"{split}_{i:04d}"
+            for part, value in ((f"{split}img", 40+i), (f"{split}imgr", 130+i)):
+                _image(root / split / part / f"{stem}.jpg", value, size=(840, 712))
+            label = root / split / f"{split}label" / f"{stem}.xml"
+            label.parent.mkdir(parents=True, exist_ok=True)
+            annotation = ET.Element('annotation')
+            obj = ET.SubElement(annotation, 'object')
+            ET.SubElement(obj, 'name').text = 'feright car' if i % 2 else 'car'
+            poly = ET.SubElement(obj, 'polygon')
+            for k, (x,y) in enumerate(((180,180),(210,160),(240,190),(210,210)), 1):
+                ET.SubElement(poly, f'x{k}').text = str(x)
+                ET.SubElement(poly, f'y{k}').text = str(y)
+            ET.ElementTree(annotation).write(label, encoding='utf-8')
+    return root

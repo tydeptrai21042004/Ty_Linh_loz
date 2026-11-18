@@ -9,7 +9,7 @@ import pytest
 import yaml
 
 from etfnet_cli import build_parser
-from tests.multidataset_fixtures import create_cvc14, create_flir, create_m3fd, create_rgbtdrone, create_vedai
+from tests.multidataset_fixtures import create_cvc14, create_flir, create_m3fd, create_rgbtdrone, create_vedai, create_dronevehicle
 from ultralytics.data.public_multidataset import ADDITIONAL_DATASETS, safe_extract_tar
 from ultralytics.data.public_rgb_ir import PUBLIC_DATASETS, prepare_public_dataset, resolve_data_reference
 from ultralytics.data.rgb_ir_check import validate_dataset
@@ -19,6 +19,7 @@ from ultralytics.data.rgb_ir_check import validate_dataset
     "name,fixture,variant,names",
     [
         ("m3fd", create_m3fd, "default", 6),
+        ("dronevehicle", create_dronevehicle, "default", 5),
         ("vedai", create_vedai, "512", 9),
         ("flir-aligned", create_flir, "aligned", 3),
         ("rgbtdroneperson", create_rgbtdrone, "default", 3),

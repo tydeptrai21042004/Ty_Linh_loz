@@ -1,6 +1,6 @@
 # Automatic public RGB–IR/RGB–NIR datasets
 
-ETFNet–SJPA-TR v5 supports six public paired-modality datasets through one acquisition and preprocessing API. The five compact additions requested for development are M3FD, VEDAI, FLIR-Aligned, RGBTDronePerson, and CVC-14; NII-CU remains available from v4.
+The MR-SJPA project supports seven public paired-modality datasets through one acquisition and preprocessing API. The three DOI-backed paper datasets are VEDAI, DroneVehicle, and M3FD. Other adapters (FLIR-Aligned, RGBTDronePerson, CVC-14, NII-CU) remain optional; see THREE_DATASETS_DOI_AND_SETUP.md for the citable three-dataset protocol.
 
 ## Install acquisition dependencies
 
@@ -21,6 +21,7 @@ python etfnet_cli.py list-data --json
 
 | Alias | Modalities | Default variant | Classes | Acquisition route |
 |---|---|---|---:|---|
+| `public:dronevehicle` | RGB + thermal UAV | `default` | 5 | Unofficial public HF mirror of original-author ZIPs (`train.zip`, `val.zip`, `test.zip`), native OBB XML |
 | `public:m3fd` | visible + thermal | `default` | 6 | official TarDAL Google Drive folder |
 | `public:vedai` | RGB + NIR | `512` | 9 | official GREYC multipart TAR files |
 | `public:flir-aligned` | visible + thermal | `aligned` | 3 | aligned Google Drive file, then public archive fallback |
@@ -40,7 +41,7 @@ python etfnet_cli.py download-data \
   --accept-license
 ```
 
-Change `--dataset` to `vedai`, `flir-aligned`, `rgbtdroneperson`, or `cvc-14`. For VEDAI, select `--variant 512` or `--variant 1024`.
+Change `--dataset` to `vedai`, `dronevehicle`, `flir-aligned`, `rgbtdroneperson`, or `cvc-14`. For all three paper datasets at once run `python paper_three_datasets.py --accept-license`. For VEDAI, select `--variant 512` or `--variant 1024`.
 
 A quick deterministic subset can be prepared with:
 
