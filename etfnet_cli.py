@@ -311,6 +311,9 @@ def main() -> None:
 
     if args.command == "export":
         model = YOLO(args.weights, task="obb")
+        from ultralytics.nn.modules.block import MR_SJPA
+        if any(isinstance(m, MR_SJPA) for m in model.model.modules()):
+            raise RuntimeError("MR_SJPA export is not certified: per-sample eigendecomposition/SVD requires native PyTorch inference.")
         channels = _model_channels(model)
         output = model.export(format=args.format, imgsz=args.imgsz, device=_device(args.device),
                               dynamic=args.dynamic, half=args.half, ch=channels)

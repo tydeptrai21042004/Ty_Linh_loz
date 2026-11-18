@@ -15,7 +15,7 @@ from .transformer import TransformerBlock
 from ultralytics.utils.torch_utils import fuse_conv_and_bn
 
 __all__ = ('DFL', 'HGBlock', 'HGStem', 'SPP', 'SPPF', 'C1', 'C2', 'C3', 'C2f', 'C3x', 'C3TR', 'C3Ghost', 'C2fCIB', 'SCDown', 'PSA', 'C3k2', 'CAFEM', 'C2PSA',
-           'GhostBottleneck', 'Bottleneck', 'BottleneckCSP', 'Proto', 'RepC3', 'ResNetLayer', 'IN', 'Multiin', 'MF', 'Add', 'Add2', 'A2C2f', 'TGF', 'GOCI', 'SJPA', 'RTPF', 'DCSPF', 'MPCRF')
+           'GhostBottleneck', 'Bottleneck', 'BottleneckCSP', 'Proto', 'RepC3', 'ResNetLayer', 'IN', 'Multiin', 'MF', 'Add', 'Add2', 'A2C2f', 'TGF', 'GOCI', 'SJPA', 'RTPF', 'DCSPF', 'MPCRF', 'MR_SJPA')
 
 
 class SE_Block(nn.Module):
@@ -2453,7 +2453,6 @@ class MPCRF(nn.Module):
             n = max(1, rs.shape[-2] - 1)
             cov_r = rc.transpose(-1, -2) @ rc / n
             cov_i = ic.transpose(-1, -2) @ ic / n
-
             er, vr = torch.linalg.eigh(cov_r)
             ei, vi = torch.linalg.eigh(cov_i)
             er = er.clamp_min(self.eps)
@@ -2553,3 +2552,122 @@ class MPCRF(nn.Module):
 
     def forward(self, x):
         return self._forward_impl(x)[0]
+
+
+class MR_SJPA(MPCRF):
+    """Moment-preserving residual spatial Procrustes alignment (proposal only).
+
+    Uses per-image, point-sampled statistics; a bounded normalized spatial
+    search performed on valid overlap; a single full-resolution grid_sample;
+    and a trainable zero-initialized correction projected onto a trust ball.
+    No published-paper baseline uses this module.
+
+    The numerical invariant is, for every sample with finite inputs,
+        ||output - concat(rgb, ir)||_F <= trust_radius * ||concat(rgb, ir)||_F.
+    """
+
+    def __init__(self, channels: int, groups: int = 32, stat_grid: int = 16,
+                 eps: float = 1e-3, coherence_tau: float = 0.30,
+                 gate_k: float = 10.0, trust_radius: float = 0.25,
+                 max_shift: int = 1, shift_penalty: float = 0.01,
+                 shift_margin: float = 0.01):
+        super().__init__(channels, groups, stat_grid, eps, coherence_tau,
+                         gate_k, trust_radius)
+        if max_shift < 0 or shift_penalty < 0 or shift_margin < 0:
+            raise ValueError('max_shift, shift_penalty and shift_margin must be nonnegative')
+        self.max_shift = int(max_shift)
+        self.shift_penalty = float(shift_penalty)
+        self.shift_margin = float(shift_margin)
+
+    @torch.no_grad()
+    def _shift_scores(self, rgb: torch.Tensor, ir: torch.Tensor):
+        """Normalized group cross-covariance on the exact overlapping area.
+
+        Frobenius score is orthogonally invariant, always used in eager mode,
+        tracing and deployment (not swapped for a different nuclear score).
+        Shift selection sees no gradient; residual convolution does.
+        """
+        batch, _, height, width = rgb.shape
+        if height < self.max_shift + 2 or width < self.max_shift + 2:
+            raise ValueError('Feature map is too small for requested shift search')
+        offsets = [(dy, dx) for dy in range(-self.max_shift, self.max_shift + 1)
+                   for dx in range(-self.max_shift, self.max_shift + 1)]
+        scores = []
+        with self._autocast_disabled(rgb.device):
+            r, i = rgb.detach().float(), ir.detach().float()
+            for dy, dx in offsets:
+                ys_r, ye_r = max(dy, 0), height + min(dy, 0)
+                xs_r, xe_r = max(dx, 0), width + min(dx, 0)
+                ys_i, ye_i = max(-dy, 0), height + min(-dy, 0)
+                xs_i, xe_i = max(-dx, 0), width + min(-dx, 0)
+                rt = self._tokens(self._point_sample(r[..., ys_r:ye_r, xs_r:xe_r]))
+                it = self._tokens(self._point_sample(i[..., ys_i:ye_i, xs_i:xe_i]))
+                rt = rt - rt.mean(-2, keepdim=True)
+                it = it - it.mean(-2, keepdim=True)
+                n = max(1, rt.shape[-2] - 1)
+                cross = rt.transpose(-1, -2) @ it / n
+                var_r = (rt.square().sum(dim=(-2, -1)) / n).clamp_min(self.eps)
+                var_i = (it.square().sum(dim=(-2, -1)) / n).clamp_min(self.eps)
+                # Cosine-style normalized cross-covariance; independent of
+                # global feature amplitude and invariant to channel rotations.
+                similarity = cross.square().sum(dim=(-2, -1)).sqrt() / (var_r * var_i).sqrt()
+                similarity = similarity.mean(-1).clamp(0, 1)
+                scores.append(similarity - self.shift_penalty * (dx * dx + dy * dy))
+        score_matrix = torch.stack(scores, dim=1)
+        best_score, best = score_matrix.max(1)
+        zero = offsets.index((0, 0))
+        gain = best_score - score_matrix[:, zero]
+        selected = torch.where(gain > self.shift_margin, best, torch.full_like(best, zero))
+        offset_tensor = torch.tensor(offsets, dtype=torch.long, device=rgb.device)
+        return offset_tensor[selected], gain, score_matrix
+
+    @staticmethod
+    def _translate_once(x: torch.Tensor, offsets: torch.Tensor) -> torch.Tensor:
+        """Per-sample zero-padded integer translation with one grid_sample."""
+        b, _, height, width = x.shape
+        ys = torch.arange(height, device=x.device, dtype=torch.float32)
+        xs = torch.arange(width, device=x.device, dtype=torch.float32)
+        y, z = torch.meshgrid(ys, xs, indexing='ij')
+        # To translate by +dy, sample from y-dy (and similarly x-dx).
+        yy = y[None] - offsets[:, 0, None, None].float()
+        xx = z[None] - offsets[:, 1, None, None].float()
+        grid = torch.stack((2.0 * xx / max(width - 1, 1) - 1.0,
+                            2.0 * yy / max(height - 1, 1) - 1.0), dim=-1)
+        return F.grid_sample(x, grid, mode='nearest', padding_mode='zeros', align_corners=True)
+
+    def _forward_impl(self, x):
+        rgb, ir = x
+        if rgb.shape != ir.shape or rgb.ndim != 4:
+            raise ValueError('MR_SJPA expects two matching BCHW modality tensors')
+        raw = torch.cat((rgb, ir), dim=1)
+        offsets, gain, scores = self._shift_scores(rgb, ir)
+        aligned_ir = self._translate_once(ir, offsets)
+        rgb_candidate, ir_candidate, coherence, singular = self._canonical_candidates(rgb, aligned_ir)
+        gate = torch.sigmoid(self.gate_k * (coherence - self.coherence_tau)).detach()
+        gate_map = gate.unsqueeze(-1).unsqueeze(-1).repeat_interleave(
+            self.group_width, dim=1).to(rgb.dtype)
+        delta_rgb = F.conv2d(gate_map * (rgb_candidate - rgb),
+                             self.rgb_residual_weight, groups=self.groups)
+        delta_ir = F.conv2d(gate_map * (ir_candidate - ir),
+                            self.ir_residual_weight, groups=self.groups)
+        correction = torch.cat((delta_rgb, delta_ir), 1)
+        raw_norm = self._sample_norm(raw)
+        correction_norm = self._sample_norm(correction)
+        radius = self.trust_radius * raw_norm
+        scale = torch.minimum(torch.ones_like(radius),
+                              radius / (correction_norm + self.eps)).to(correction.dtype)
+        output = raw + scale * correction
+        return output, {
+            'raw': raw, 'offset': offsets, 'improvement': gain,
+            'score_matrix': scores, 'coherence': coherence,
+            'singular_values': singular, 'gate': gate,
+            'correction_norm': correction_norm, 'radius': radius,
+            'aligned_ir': aligned_ir, 'trust_scale': scale,
+        }
+
+    def prepare_for_export(self):
+        raise RuntimeError(
+            'MR_SJPA requires SVD/eigendecomposition for per-sample alignment. '
+            'ONNX/TensorRT export is not certified; use native PyTorch inference '
+            'until equivalent export operators are implemented and tested.'
+        )

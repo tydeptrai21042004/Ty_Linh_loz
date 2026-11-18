@@ -1,26 +1,28 @@
 {
-  "paper_baseline": {
-    "id": "etfnet_tgf_paper",
-    "source": "Nguyen, Tran, Nguyen (2026), Information Fusion",
-    "doi": "10.1016/j.inffus.2026.104658",
-    "author_repo": "https://github.com/lansimtech/ETFNet",
-    "reference_yaml": "ultralytics/cfg/models/etfnet/etfnet_P2_CAFEM_TGF.yaml",
-    "status": "architecture_match_checked; not accuracy_reproduced"
+  "schema_version": 2,
+  "proposal": {
+    "name": "MR_SJPA",
+    "yaml": "ultralytics/cfg/models/etfnet/etfnet_P2_C3k2_SJPA_TR_Corrected.yaml",
+    "status": "CPU_tested_not_trained"
   },
-  "ablations": [
-    "dual_concat",
-    "dual_add",
-    "cafem_only",
-    "tgf_only",
-    "goci_no_spatial",
-    "sjpa_no_reliability",
-    "rtpf_safety_ablation"
+  "paper_baselines": [
+    {
+      "name": "ETFNet",
+      "doi": "10.1016/j.inffus.2026.104658",
+      "author_repo": "https://github.com/lansimtech/ETFNet",
+      "geometry": "OBB",
+      "mode": "author_source_subprocess",
+      "status": "requires_GPU_training_and_data_adapter_validation"
+    },
+    {
+      "name": "C2Former",
+      "doi": "10.1109/TGRS.2024.3376819",
+      "author_repo": "https://github.com/yuanmaoxun/C2Former",
+      "geometry": "OBB",
+      "mode": "official_MMRotate_own_environment",
+      "status": "requires_independent_environment_and_data_adapter"
+    }
   ],
-  "proposal": "sjpa_tr_proposal",
-  "excluded_non_reproduction": [
-    "rgb_p3p5",
-    "rgb_yolo11_p2p5",
-    "sjpa_cafem_legacy"
-  ],
-  "limits": "Does not establish independent code equivalence, trained weight equivalence, published metrics, or independent paper equivalence for any ablation."
+  "local_dummy_baselines": [],
+  "policy": "Only trained/evaluated author-source models with commit, checkpoint, paired dataset split and evaluator are eligible for paper baseline result tables."
 }

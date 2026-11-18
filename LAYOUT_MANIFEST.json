@@ -13,190 +13,76 @@
   ],
   "files": [
     {
-      "original": "kaggle/ETFNet_Paper_Baseline_Ablations_Kaggle.py",
-      "packed": "verification/kaggle~ETFNet_Paper_Baseline_Ablations_Kaggle.py",
-      "sha256": "05dacc1205462805091e1d38006afa31ab6e1fa0f011bb2f4960e4aa5291fbcf",
-      "bytes": 20174
+      "original": "ultralytics/__init__.py",
+      "packed": "configs/ultralytics~__init__.py",
+      "sha256": "0e263b307239edaa2a882fa5cf6595a23669c4a54209529642bf7ff117b8c881",
+      "bytes": 808
     },
     {
-      "original": "tests/__init__.py",
-      "packed": "verification/tests~__init__.py",
-      "sha256": "f3dbb9775f16210472281c50d09276d76e2846bb37570c090dc57075d74c6e74",
-      "bytes": 52
+      "original": "ultralytics/cfg/__init__.py",
+      "packed": "configs/ultralytics~cfg~__init__.py",
+      "sha256": "d76dd463fb9ff09123daa21190026df82dc43069d342b756e717a2efbfc9512e",
+      "bytes": 20441
     },
     {
-      "original": "tests/conftest.py",
-      "packed": "verification/tests~conftest.py",
-      "sha256": "6d34c88cfc06ba1a91f2333fa65f64d270aaa45f686f86b551dbb9dfbef88085",
-      "bytes": 144
+      "original": "ultralytics/cfg/datasets/etfnet_rgb_ir_example.yaml",
+      "packed": "configs/ultralytics~cfg~datasets~etfnet_rgb_ir_example.yaml",
+      "sha256": "9739eb07ecec3e3bda965835e857b5907d0fca78d880dd602229327b868f7808",
+      "bytes": 673
     },
     {
-      "original": "tests/create_synthetic_fixture.py",
-      "packed": "verification/tests~create_synthetic_fixture.py",
-      "sha256": "db8d183a4a49ff189229f67a1cd663355f48a8174fd8d989336d036beb9aa055",
-      "bytes": 2643
+      "original": "ultralytics/cfg/default.yaml",
+      "packed": "configs/ultralytics~cfg~default.yaml",
+      "sha256": "943f8fc8ee617dd32b6144343b6d122510c3ef453b1558bab26d60adfa825c61",
+      "bytes": 8678
     },
     {
-      "original": "tests/exact_resume_check.py",
-      "packed": "verification/tests~exact_resume_check.py",
-      "sha256": "3dbc6d9d2b525618e6e91516d43165969fe7daab15f1995bcefb2ed27bb7da5e",
-      "bytes": 4561
+      "original": "ultralytics/cfg/models/README.md",
+      "packed": "configs/ultralytics~cfg~models~README.md",
+      "sha256": "df4f5f36c86240962542e4ba9e430414f952d55c1f1ad165bca9675126a8316f",
+      "bytes": 492
     },
     {
-      "original": "tests/fixtures/tiny_sjpa_obb.yaml",
-      "packed": "verification/tests~fixtures~tiny_sjpa_obb.yaml",
-      "sha256": "b80dc4e22f13901e172b84e98cf28df50cf72eed91147ae4924f44af78049d97",
-      "bytes": 540
+      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_C3k2_MPCRF.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_C3k2_MPCRF.yaml",
+      "sha256": "e8b944061ff79c53b2d75c0fb17ee25c2c421e11c05e5d431b70965e6c90709f",
+      "bytes": 1308
     },
     {
-      "original": "tests/full_pipeline_smoke.sh",
-      "packed": "verification/tests~full_pipeline_smoke.sh",
-      "sha256": "cb8e79f48cccc886d850598c4d89dfce7287e1136793bd9fcc4f0fe006196205",
-      "bytes": 141
+      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_C3k2_SJPA_TR_Corrected.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_C3k2_SJPA_TR_Corrected.yaml",
+      "sha256": "ec549f28e19485c11fcab66086b6b13c6f6205a927641914036d527ff904bfa0",
+      "bytes": 1370
     },
     {
-      "original": "tests/multidataset_fixtures.py",
-      "packed": "verification/tests~multidataset_fixtures.py",
-      "sha256": "70df9535baf05b37ed552252fa39c6b09df3286708d05e5d068dc82ec8dfda85",
-      "bytes": 3780
+      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_CAFEM_TGF.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_CAFEM_TGF.yaml",
+      "sha256": "11fba40e872ecc29b5d2b0d6d88abb3cebc7cc1f0273ff16f591f36ba44b8361",
+      "bytes": 1659
     },
     {
-      "original": "tests/public_dataset_fixture.py",
-      "packed": "verification/tests~public_dataset_fixture.py",
-      "sha256": "41b2a48ba01057ec281fe44562197263fc2964de957fb358caa539e356267f52",
-      "bytes": 2395
+      "original": "ultralytics/cfg/models/etfnet/etfnet_dualstream_noCAFEM_noTGF.yaml",
+      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_dualstream_noCAFEM_noTGF.yaml",
+      "sha256": "775aadfc800f0d4fa2739ed41573d40d35775d0312af80bb4c736917d3a04217",
+      "bytes": 1695
     },
     {
-      "original": "tests/public_dataset_full_pipeline.sh",
-      "packed": "verification/tests~public_dataset_full_pipeline.sh",
-      "sha256": "f901256d403763e6573621bfe2fc127c3e2c1333d62a57bfe04100cc048486ea",
-      "bytes": 1882
+      "original": "ultralytics/cfg/models/v8/yolov8.yaml",
+      "packed": "configs/ultralytics~cfg~models~v8~yolov8.yaml",
+      "sha256": "f89e6cb9d44bd143df20498f467bb4f59897db3fff16e5bb6684d58d2b3f6a80",
+      "bytes": 1919
     },
     {
-      "original": "tests/run_full_e2e.py",
-      "packed": "verification/tests~run_full_e2e.py",
-      "sha256": "9f30213e1ed01cdc53864914413bb75e79294952f5ab4f4687c7b876ad0c340e",
-      "bytes": 4076
+      "original": "ultralytics/cfg/trackers/botsort.yaml",
+      "packed": "configs/ultralytics~cfg~trackers~botsort.yaml",
+      "sha256": "37775d454976b8ebc923f43b4c1230f3c33269e576e345ffc25c7967a2225215",
+      "bytes": 890
     },
     {
-      "original": "tests/run_multidataset_full_pipeline.py",
-      "packed": "verification/tests~run_multidataset_full_pipeline.py",
-      "sha256": "521d8d6641858c41a86fa292eb41ecc6e976ccc4aa5defc4f80727042975e8a3",
-      "bytes": 6468
-    },
-    {
-      "original": "tests/smoke_pipeline.py",
-      "packed": "verification/tests~smoke_pipeline.py",
-      "sha256": "c3fb727d431736d153998d6ac17fe05e8c4d7c7fe91c9dfae6a3ff21dcab0cc0",
-      "bytes": 6021
-    },
-    {
-      "original": "tests/test_candidate_certificate.py",
-      "packed": "verification/tests~test_candidate_certificate.py",
-      "sha256": "9ef12bcbcff393c511de6f65b96250de436d3cb54a91f7ecece78978f87818c8",
-      "bytes": 558
-    },
-    {
-      "original": "tests/test_dcspf_guard.py",
-      "packed": "verification/tests~test_dcspf_guard.py",
-      "sha256": "6eb920b84cf5ec82fc88c14f04d2b4c22857ce270fb24d04f4dfaaf518739f9f",
-      "bytes": 2491
-    },
-    {
-      "original": "tests/test_kaggle_regressions.py",
-      "packed": "verification/tests~test_kaggle_regressions.py",
-      "sha256": "ac74c7c9178030f85b337c6657dc249f390214fd7c88d82d5706e41492d29878",
-      "bytes": 9522
-    },
-    {
-      "original": "tests/test_mpcrf_math.py",
-      "packed": "verification/tests~test_mpcrf_math.py",
-      "sha256": "cd4a218886be0fa5a100125ce64cd1e10bf395ffb0e9ca87ade25b2d07325374",
-      "bytes": 6002
-    },
-    {
-      "original": "tests/test_multidataset_pipeline.py",
-      "packed": "verification/tests~test_multidataset_pipeline.py",
-      "sha256": "3a7783be80c5b14b216f0a124fc8da41f11240db745a3e454627d6dd093b9836",
-      "bytes": 8109
-    },
-    {
-      "original": "tests/test_pipeline_reproducibility.py",
-      "packed": "verification/tests~test_pipeline_reproducibility.py",
-      "sha256": "4e52413dec437086ba87edcfd2a5f5c3ba525443ac4dc87de3bea12866c47f8d",
-      "bytes": 7650
-    },
-    {
-      "original": "tests/test_public_dataset_pipeline.py",
-      "packed": "verification/tests~test_public_dataset_pipeline.py",
-      "sha256": "0ea2fee6321b5ff6d5941a8d6dc2fa24937da981a8b8d92fe735c4fac0f8affb",
-      "bytes": 5328
-    },
-    {
-      "original": "tests/test_rgb_ir_edge_cases.py",
-      "packed": "verification/tests~test_rgb_ir_edge_cases.py",
-      "sha256": "f2734a15ecdf0b423865a707c52559dfaef0e1b57a53214ff59b0111c684880f",
-      "bytes": 6837
-    },
-    {
-      "original": "tests/test_rtpf_corrected.py",
-      "packed": "verification/tests~test_rtpf_corrected.py",
-      "sha256": "a7d341fec9b70b70e0e193bfc0a6ae016372710e810cc053b39fd292b720c7e8",
-      "bytes": 2642
-    },
-    {
-      "original": "tests/test_sjpa_math_extended.py",
-      "packed": "verification/tests~test_sjpa_math_extended.py",
-      "sha256": "56ca986659ac6daad2785ce724aa82a40c9052533b49c44e36129a27874dfff5",
-      "bytes": 11064
-    },
-    {
-      "original": "tests/test_split_source_layout.py",
-      "packed": "verification/tests~test_split_source_layout.py",
-      "sha256": "bebd6938c64d7db03d68ef4f91b18cb45d93b8865885a442547161a9027c278c",
-      "bytes": 973
-    },
-    {
-      "original": "tools/__init__.py",
-      "packed": "verification/tools~__init__.py",
-      "sha256": "295f43ff7476510ed4141ca67270f39a95cf61cf54b39f6725fcb19ebdb89dd3",
-      "bytes": 45
-    },
-    {
-      "original": "tools/audit_baselines.py",
-      "packed": "verification/tools~audit_baselines.py",
-      "sha256": "4d2226f9e84f9cb4270723b8113e6cd26fe37e28d48e601b970a322533d951c3",
-      "bytes": 6313
-    },
-    {
-      "original": "tools/certify_candidate.py",
-      "packed": "verification/tools~certify_candidate.py",
-      "sha256": "1ade535e8b4144d5ef0c58083e7414110caeca03ac9d3b8a193bb377a2e6c287",
-      "bytes": 3738
-    },
-    {
-      "original": "tools/check_rgb_ir_dataset.py",
-      "packed": "verification/tools~check_rgb_ir_dataset.py",
-      "sha256": "bd5b7caec9c07f6326b69a7a713315bfbcfc53fe34d0755b9ca83e1e28633e36",
-      "bytes": 1174
-    },
-    {
-      "original": "tools/run_extended_validation.py",
-      "packed": "verification/tools~run_extended_validation.py",
-      "sha256": "bd844f7ccd62694c1599a72d602a68259a349e78a6b2aaea3186b20db3fd62e3",
-      "bytes": 5013
-    },
-    {
-      "original": "tools/run_reproducible_experiment.py",
-      "packed": "verification/tools~run_reproducible_experiment.py",
-      "sha256": "cf8195b6007c531173124d57465e06cdb6e2333db2858715d726793657f4a0a3",
-      "bytes": 6058
-    },
-    {
-      "original": "tools/validate_model_configs.py",
-      "packed": "verification/tools~validate_model_configs.py",
-      "sha256": "03d6c761d3b211825aa26c3a7325c4d26734401e70b3b76113b649ac15748b58",
-      "bytes": 1893
+      "original": "ultralytics/cfg/trackers/bytetrack.yaml",
+      "packed": "configs/ultralytics~cfg~trackers~bytetrack.yaml",
+      "sha256": "145a660a3ec4d31a4e75eed1f96df3515732ea12821c08a3f6ac29f52029fa92",
+      "bytes": 694
     },
     {
       "original": "ultra_modeling/models/__init__.py",
@@ -297,14 +183,14 @@
     {
       "original": "ultra_modeling/nn/modules/__init__.py",
       "packed": "models/ultra_modeling~nn~modules~__init__.py",
-      "sha256": "faf5a9964601599a18060eb7dbb0b63f1232d27f9896be0f0be5b9d90776e406",
-      "bytes": 1710
+      "sha256": "7fc36c31d6adfe80731ad83a6e85fc5879b00d8d4967ca0954c703c4adec6401",
+      "bytes": 1721
     },
     {
       "original": "ultra_modeling/nn/modules/block.py",
       "packed": "models/ultra_modeling~nn~modules~block.py",
-      "sha256": "d4d0e29f9f848396eb1f42929e0a14d73a40ef1d8120cdcae0771b500d49403a",
-      "bytes": 106419
+      "sha256": "04d90e3a244b84659f59f714d1283bd547b83bbef2da95dcfc25d77048da7fee",
+      "bytes": 113018
     },
     {
       "original": "ultra_modeling/nn/modules/conv.py",
@@ -339,8 +225,8 @@
     {
       "original": "ultra_modeling/nn/tasks.py",
       "packed": "models/ultra_modeling~nn~tasks.py",
-      "sha256": "7a5c5293c46779799134a4739faff9f197836b26372447e8f63e2d051d98cd97",
-      "bytes": 39466
+      "sha256": "cfceb75a286ed0037cb8fdbcd4523cc30cca929bd8bee12d768b559645ba9107",
+      "bytes": 39475
     },
     {
       "original": "ultra_runtime/data/__init__.py",
@@ -679,106 +565,202 @@
       "bytes": 6227
     },
     {
-      "original": "ultralytics/__init__.py",
-      "packed": "configs/ultralytics~__init__.py",
-      "sha256": "0e263b307239edaa2a882fa5cf6595a23669c4a54209529642bf7ff117b8c881",
-      "bytes": 808
+      "original": "kaggle/PaperOnly_ThreeSeed_E2E_Kaggle.py",
+      "packed": "verification/kaggle~PaperOnly_ThreeSeed_E2E_Kaggle.py",
+      "sha256": "300c82a27e48a182e3d65a7149709029d8110680df416d8a72bed19daca57370",
+      "bytes": 2726
     },
     {
-      "original": "ultralytics/cfg/__init__.py",
-      "packed": "configs/ultralytics~cfg~__init__.py",
-      "sha256": "d76dd463fb9ff09123daa21190026df82dc43069d342b756e717a2efbfc9512e",
-      "bytes": 20441
+      "original": "tests/__init__.py",
+      "packed": "verification/tests~__init__.py",
+      "sha256": "f3dbb9775f16210472281c50d09276d76e2846bb37570c090dc57075d74c6e74",
+      "bytes": 52
     },
     {
-      "original": "ultralytics/cfg/datasets/etfnet_rgb_ir_example.yaml",
-      "packed": "configs/ultralytics~cfg~datasets~etfnet_rgb_ir_example.yaml",
-      "sha256": "9739eb07ecec3e3bda965835e857b5907d0fca78d880dd602229327b868f7808",
-      "bytes": 673
+      "original": "tests/conftest.py",
+      "packed": "verification/tests~conftest.py",
+      "sha256": "6d34c88cfc06ba1a91f2333fa65f64d270aaa45f686f86b551dbb9dfbef88085",
+      "bytes": 144
     },
     {
-      "original": "ultralytics/cfg/default.yaml",
-      "packed": "configs/ultralytics~cfg~default.yaml",
-      "sha256": "943f8fc8ee617dd32b6144343b6d122510c3ef453b1558bab26d60adfa825c61",
-      "bytes": 8678
+      "original": "tests/create_synthetic_fixture.py",
+      "packed": "verification/tests~create_synthetic_fixture.py",
+      "sha256": "db8d183a4a49ff189229f67a1cd663355f48a8174fd8d989336d036beb9aa055",
+      "bytes": 2643
     },
     {
-      "original": "ultralytics/cfg/models/README.md",
-      "packed": "configs/ultralytics~cfg~models~README.md",
-      "sha256": "7f1b0d4a7fc22cc04cc73fb0270758f92de96653272a594d9564e25ac0f0d6d5",
-      "bytes": 3095
+      "original": "tests/exact_resume_check.py",
+      "packed": "verification/tests~exact_resume_check.py",
+      "sha256": "3dbc6d9d2b525618e6e91516d43165969fe7daab15f1995bcefb2ed27bb7da5e",
+      "bytes": 4561
     },
     {
-      "original": "ultralytics/cfg/models/etfnet/etfnet_CAFEM_noTGF.yaml",
-      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_CAFEM_noTGF.yaml",
-      "sha256": "0459bd8c8060ef8bf9c3a4fef138c83b212af51c38537f17e6ac41f109eb4e4e",
-      "bytes": 1625
+      "original": "tests/fixtures/tiny_sjpa_obb.yaml",
+      "packed": "verification/tests~fixtures~tiny_sjpa_obb.yaml",
+      "sha256": "b80dc4e22f13901e172b84e98cf28df50cf72eed91147ae4924f44af78049d97",
+      "bytes": 540
     },
     {
-      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_C3k2_MPCRF.yaml",
-      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_C3k2_MPCRF.yaml",
-      "sha256": "e8b944061ff79c53b2d75c0fb17ee25c2c421e11c05e5d431b70965e6c90709f",
-      "bytes": 1308
+      "original": "tests/full_pipeline_smoke.sh",
+      "packed": "verification/tests~full_pipeline_smoke.sh",
+      "sha256": "cb8e79f48cccc886d850598c4d89dfce7287e1136793bd9fcc4f0fe006196205",
+      "bytes": 141
     },
     {
-      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_C3k2_RTPF.yaml",
-      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_C3k2_RTPF.yaml",
-      "sha256": "33f934534dbd173b72163fac9d843683311ba7439455627194907da760b25eaa",
-      "bytes": 1592
+      "original": "tests/multidataset_fixtures.py",
+      "packed": "verification/tests~multidataset_fixtures.py",
+      "sha256": "70df9535baf05b37ed552252fa39c6b09df3286708d05e5d068dc82ec8dfda85",
+      "bytes": 3780
     },
     {
-      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_C3k2_SJPA_TR_Corrected.yaml",
-      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_C3k2_SJPA_TR_Corrected.yaml",
-      "sha256": "4677c7f6bcff2d65141db5338dce273a7451dfe368665f024e8099e1effa7750",
-      "bytes": 1456
+      "original": "tests/public_dataset_fixture.py",
+      "packed": "verification/tests~public_dataset_fixture.py",
+      "sha256": "41b2a48ba01057ec281fe44562197263fc2964de957fb358caa539e356267f52",
+      "bytes": 2395
     },
     {
-      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_CAFEM_GOCI.yaml",
-      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_CAFEM_GOCI.yaml",
-      "sha256": "de75c930fa02e22136dfa79379d220b4deef45d8edf879e6115fb4629e68deb3",
-      "bytes": 1058
+      "original": "tests/public_dataset_full_pipeline.sh",
+      "packed": "verification/tests~public_dataset_full_pipeline.sh",
+      "sha256": "f901256d403763e6573621bfe2fc127c3e2c1333d62a57bfe04100cc048486ea",
+      "bytes": 1882
     },
     {
-      "original": "ultralytics/cfg/models/etfnet/etfnet_P2_CAFEM_TGF.yaml",
-      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_P2_CAFEM_TGF.yaml",
-      "sha256": "11fba40e872ecc29b5d2b0d6d88abb3cebc7cc1f0273ff16f591f36ba44b8361",
-      "bytes": 1659
+      "original": "tests/run_full_e2e.py",
+      "packed": "verification/tests~run_full_e2e.py",
+      "sha256": "9f30213e1ed01cdc53864914413bb75e79294952f5ab4f4687c7b876ad0c340e",
+      "bytes": 4076
     },
     {
-      "original": "ultralytics/cfg/models/etfnet/etfnet_dualstream_noCAFEM_noTGF.yaml",
-      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_dualstream_noCAFEM_noTGF.yaml",
-      "sha256": "775aadfc800f0d4fa2739ed41573d40d35775d0312af80bb4c736917d3a04217",
-      "bytes": 1695
+      "original": "tests/run_multidataset_full_pipeline.py",
+      "packed": "verification/tests~run_multidataset_full_pipeline.py",
+      "sha256": "521d8d6641858c41a86fa292eb41ecc6e976ccc4aa5defc4f80727042975e8a3",
+      "bytes": 6468
     },
     {
-      "original": "ultralytics/cfg/models/etfnet/etfnet_noCAFEM_TGF.yaml",
-      "packed": "configs/ultralytics~cfg~models~etfnet~etfnet_noCAFEM_TGF.yaml",
-      "sha256": "29edcdf4b0a638c87f68b14bc16a28c6972250ec7370e653cf72821e782f24c1",
-      "bytes": 2157
+      "original": "tests/smoke_pipeline.py",
+      "packed": "verification/tests~smoke_pipeline.py",
+      "sha256": "c3fb727d431736d153998d6ac17fe05e8c4d7c7fe91c9dfae6a3ff21dcab0cc0",
+      "bytes": 6021
     },
     {
-      "original": "ultralytics/cfg/models/etfnet/noCAFEM_noTGF_add.yaml",
-      "packed": "configs/ultralytics~cfg~models~etfnet~noCAFEM_noTGF_add.yaml",
-      "sha256": "a5f23393d62d002e879ba907b7099fb3bffe2229cd945247141b67184102fca5",
-      "bytes": 1629
+      "original": "tests/test_candidate_certificate.py",
+      "packed": "verification/tests~test_candidate_certificate.py",
+      "sha256": "9ef12bcbcff393c511de6f65b96250de436d3cb54a91f7ecece78978f87818c8",
+      "bytes": 558
     },
     {
-      "original": "ultralytics/cfg/models/v8/yolov8.yaml",
-      "packed": "configs/ultralytics~cfg~models~v8~yolov8.yaml",
-      "sha256": "f89e6cb9d44bd143df20498f467bb4f59897db3fff16e5bb6684d58d2b3f6a80",
-      "bytes": 1919
+      "original": "tests/test_dcspf_guard.py",
+      "packed": "verification/tests~test_dcspf_guard.py",
+      "sha256": "6eb920b84cf5ec82fc88c14f04d2b4c22857ce270fb24d04f4dfaaf518739f9f",
+      "bytes": 2491
     },
     {
-      "original": "ultralytics/cfg/trackers/botsort.yaml",
-      "packed": "configs/ultralytics~cfg~trackers~botsort.yaml",
-      "sha256": "37775d454976b8ebc923f43b4c1230f3c33269e576e345ffc25c7967a2225215",
-      "bytes": 890
+      "original": "tests/test_kaggle_regressions.py",
+      "packed": "verification/tests~test_kaggle_regressions.py",
+      "sha256": "ac74c7c9178030f85b337c6657dc249f390214fd7c88d82d5706e41492d29878",
+      "bytes": 9522
     },
     {
-      "original": "ultralytics/cfg/trackers/bytetrack.yaml",
-      "packed": "configs/ultralytics~cfg~trackers~bytetrack.yaml",
-      "sha256": "145a660a3ec4d31a4e75eed1f96df3515732ea12821c08a3f6ac29f52029fa92",
-      "bytes": 694
+      "original": "tests/test_mpcrf_math.py",
+      "packed": "verification/tests~test_mpcrf_math.py",
+      "sha256": "cd4a218886be0fa5a100125ce64cd1e10bf395ffb0e9ca87ade25b2d07325374",
+      "bytes": 6002
+    },
+    {
+      "original": "tests/test_mr_sjpa_paper_only.py",
+      "packed": "verification/tests~test_mr_sjpa_paper_only.py",
+      "sha256": "c1e372ca3da6e6f8f92e92ab3ced479422cc192b1fa82905ffc4036c3c082b2d",
+      "bytes": 4080
+    },
+    {
+      "original": "tests/test_multidataset_pipeline.py",
+      "packed": "verification/tests~test_multidataset_pipeline.py",
+      "sha256": "3a7783be80c5b14b216f0a124fc8da41f11240db745a3e454627d6dd093b9836",
+      "bytes": 8109
+    },
+    {
+      "original": "tests/test_paper_benchmark_e2e.py",
+      "packed": "verification/tests~test_paper_benchmark_e2e.py",
+      "sha256": "0d9c9f9247941bdcdf776b425ec4077860b634eaab860132df6d549c163c7ac0",
+      "bytes": 4900
+    },
+    {
+      "original": "tests/test_pipeline_reproducibility.py",
+      "packed": "verification/tests~test_pipeline_reproducibility.py",
+      "sha256": "4e52413dec437086ba87edcfd2a5f5c3ba525443ac4dc87de3bea12866c47f8d",
+      "bytes": 7650
+    },
+    {
+      "original": "tests/test_public_dataset_pipeline.py",
+      "packed": "verification/tests~test_public_dataset_pipeline.py",
+      "sha256": "0ea2fee6321b5ff6d5941a8d6dc2fa24937da981a8b8d92fe735c4fac0f8affb",
+      "bytes": 5328
+    },
+    {
+      "original": "tests/test_rgb_ir_edge_cases.py",
+      "packed": "verification/tests~test_rgb_ir_edge_cases.py",
+      "sha256": "f2734a15ecdf0b423865a707c52559dfaef0e1b57a53214ff59b0111c684880f",
+      "bytes": 6837
+    },
+    {
+      "original": "tests/test_rtpf_corrected.py",
+      "packed": "verification/tests~test_rtpf_corrected.py",
+      "sha256": "a7d341fec9b70b70e0e193bfc0a6ae016372710e810cc053b39fd292b720c7e8",
+      "bytes": 2642
+    },
+    {
+      "original": "tests/test_sjpa_math_extended.py",
+      "packed": "verification/tests~test_sjpa_math_extended.py",
+      "sha256": "56ca986659ac6daad2785ce724aa82a40c9052533b49c44e36129a27874dfff5",
+      "bytes": 11064
+    },
+    {
+      "original": "tests/test_split_source_layout.py",
+      "packed": "verification/tests~test_split_source_layout.py",
+      "sha256": "dffc656dcf88617e7bfb57a105b851c4fbb876f8378bada80802d6e23cb47424",
+      "bytes": 982
+    },
+    {
+      "original": "tools/__init__.py",
+      "packed": "verification/tools~__init__.py",
+      "sha256": "295f43ff7476510ed4141ca67270f39a95cf61cf54b39f6725fcb19ebdb89dd3",
+      "bytes": 45
+    },
+    {
+      "original": "tools/audit_baselines.py",
+      "packed": "verification/tools~audit_baselines.py",
+      "sha256": "42965446411510a93bd425795eead2ecbb1cde2306d89cb2ceef610373567e40",
+      "bytes": 1851
+    },
+    {
+      "original": "tools/certify_candidate.py",
+      "packed": "verification/tools~certify_candidate.py",
+      "sha256": "1ade535e8b4144d5ef0c58083e7414110caeca03ac9d3b8a193bb377a2e6c287",
+      "bytes": 3738
+    },
+    {
+      "original": "tools/check_rgb_ir_dataset.py",
+      "packed": "verification/tools~check_rgb_ir_dataset.py",
+      "sha256": "bd5b7caec9c07f6326b69a7a713315bfbcfc53fe34d0755b9ca83e1e28633e36",
+      "bytes": 1174
+    },
+    {
+      "original": "tools/run_extended_validation.py",
+      "packed": "verification/tools~run_extended_validation.py",
+      "sha256": "bd844f7ccd62694c1599a72d602a68259a349e78a6b2aaea3186b20db3fd62e3",
+      "bytes": 5013
+    },
+    {
+      "original": "tools/run_reproducible_experiment.py",
+      "packed": "verification/tools~run_reproducible_experiment.py",
+      "sha256": "cf8195b6007c531173124d57465e06cdb6e2333db2858715d726793657f4a0a3",
+      "bytes": 6058
+    },
+    {
+      "original": "tools/validate_model_configs.py",
+      "packed": "verification/tools~validate_model_configs.py",
+      "sha256": "03d6c761d3b211825aa26c3a7325c4d26734401e70b3b76113b649ac15748b58",
+      "bytes": 1893
     }
   ]
 }

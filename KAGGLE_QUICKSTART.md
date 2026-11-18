@@ -1,18 +1,14 @@
-# Kaggle — paper baseline + ablations + proposal
+# One-click Kaggle benchmark (paper baselines only)
 
-This release includes one official-paper-derived ETFNet–TGF baseline, seven ablations,
-and the SJPA-TR proposal. The Kaggle notebook does **not** include arbitrary RGB-only
-baselines or the obsolete CAFEM-SJPA variant.
+**Artifacts**: `Ty_Linh_Paper_Benchmark_Full_Corrected.zip` (full repository), `Ty_Linh_Paper_Benchmark_Changes_Only.zip` (patch for the newest `Ty_Linh_loz-main(1).zip`), and `Kaggle_Run_PaperOnly_E2E.py` (notebook entry).
 
-1. Enable Kaggle **Internet** and **GPU** and ensure a usable dataset source.
-2. Upload `ETFNet_SJPA_TR_Paper_Baseline_Final.zip` as an input Dataset, or clone your
-   GitHub repository after pushing the flat source files.
-3. After restoration, use `kaggle/ETFNet_Paper_Baseline_Ablations_Kaggle.py` as one cell.
-4. Specify `SOURCE_MODE='uploaded_zip'` or `SOURCE_MODE='github'` in the script as desired.
-5. Set `ETFNET_EPOCHS` and `ETFNET_SEEDS` explicitly if changing the defaults.
+1. Upload the full corrected ZIP as a Kaggle Dataset input and enable **GPU** and **Internet**. Review/accept the VEDAI dataset terms.
+2. Run `Kaggle_Run_PaperOnly_E2E.py` in a Kaggle notebook with `!python /kaggle/input/<notebook-dataset>/Kaggle_Run_PaperOnly_E2E.py`, or paste its code in a notebook cell.
+3. The script searches exactly one corrected repository ZIP in `/kaggle/input/`, restores the source, downloads/preprocesses paired VEDAI-512 and creates a new 3-way deterministic train/val/test split. Both modalities are encoded to the SAME JPEG format for all methods.
+4. It trains **MR-SJPA (proposal)** and **ETFNet (published original author code)** with three matched seeds (0/1/2) and attempts exact checkpoint resume where available. The paper baseline is **not** a local Concat/Add fusion substitute.
+5. After training, it selects real `best.pt` weights using validation, runs one independent test evaluation per seed, saves actual OBB predictions, evaluates each with the SAME polygon-IoU AP101 implementation and emits a statistics package (mean, SD, 95% t CI, paired deltas/t-test, exact sign-flip p, LaTeX table).
+6. Output: `/kaggle/working/PAPER_ONLY_THREE_SEED_RESULTS.zip`.
 
-The runner trains one ETFNet paper-baseline candidate, seven ablations and one
-proposal under the same dataset split and per-seed configuration, then writes
-`comparison_group` and `source_paper` fields into CSV. Smoke tests do not establish
-published-paper accuracy. Kaggle runtime, dataset download availability, GPU
-memory and convergence have **not** been validated by this release.
+Optional: Set environment `ETFNET_AUTHOR_SHA` to a pinned original upstream commit; recommended for final published results. Set `C2FORMER_PYTHON` to a compatible separate MMRotate 0.3.x interpreter to automatically add the third *original-paper* C²Former baseline. The default Kaggle image is **not** known compatible with legacy C²Former; if no compatible environment is supplied, results are labelled **2-method only**, never 3-method.
+
+**Reality check:** CPU unit/integration tests passed. Real dataset download, author-code GPU training and legacy C²Former environment have **not** been executed here. Public host availability, CUDA ABI and upstream loader compatibility may cause a clear error rather than silent substitution. This is a **new VEDAI held-out benchmark**, not exact reproduction of the papers' originally published numbers. See `PAPER_BENCHMARK_E2E.md`.

@@ -26,11 +26,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "etfnet-sjpa-tr"
 dynamic = ["version"]
-description = "Corrected paired RGB-IR UAV detection pipeline with ETFNet and parameter-free SJPA-TR fusion."
+description = "RGB-IR oriented detection proposal with bounded residual MR-SJPA fusion and official-source paper baseline runners."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { "text" = "AGPL-3.0" }
-keywords = ["RGB-IR", "multispectral", "UAV", "object-detection", "oriented-bounding-box", "ETFNet", "SJPA-TR"]
+keywords = ["RGB-IR", "multispectral", "UAV", "object-detection", "oriented-bounding-box", "ETFNet", "MR-SJPA"]
 authors = [
     { name = "ETFNet authors and SJPA-TR implementation contributors" }
 ]

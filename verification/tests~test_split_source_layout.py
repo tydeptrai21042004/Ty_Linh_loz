@@ -5,14 +5,14 @@ import torch
 import ultralytics
 from ultralytics import YOLO
 from ultralytics.data.public_multidataset import ADDITIONAL_DATASETS
-from ultralytics.nn.modules.block import SJPA
+from ultralytics.nn.modules.block import MR_SJPA
 from ultralytics.utils import DEFAULT_CFG_PATH, ROOT
 
 
 def test_split_source_tree_preserves_public_imports_and_resources():
     expected = {"m3fd", "vedai", "flir-aligned", "rgbtdroneperson", "cvc-14"}
     assert expected.issubset(ADDITIONAL_DATASETS)
-    assert SJPA.__name__ == "SJPA"
+    assert MR_SJPA.__name__ == "MR_SJPA"
     assert ROOT == Path(ultralytics.__file__).resolve().parent
     assert DEFAULT_CFG_PATH.is_file()
     assert (ROOT / "cfg/models/etfnet/etfnet_P2_C3k2_SJPA_TR_Corrected.yaml").is_file()

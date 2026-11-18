@@ -79,7 +79,10 @@ def _image(src,dst, format='JPEG'):
     from PIL import Image
     dst.parent.mkdir(parents=True, exist_ok=True)
     with Image.open(src) as img:
-        if format == 'JPEG': img.convert('RGB').save(dst, 'JPEG', quality=100, subsampling=0)
+        if format == 'JPEG':
+            # Preserve identical encoded pixels across common-input experiments.
+            if src.suffix.lower() in ('.jpg','.jpeg') and img.mode=='RGB':shutil.copy2(src,dst)
+            else:img.convert('RGB').save(dst, 'JPEG', quality=100, subsampling=0)
         else: img.convert('RGB').save(dst,'PNG')
 
 
